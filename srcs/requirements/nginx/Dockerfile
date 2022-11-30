@@ -1,8 +1,10 @@
 FROM debian:bullseye
-RUN apt update -y; apt install nginx openssl -y;\
+COPY ./conf/default /etc/nginx/sites-available/default
+RUN apt update -y; \
+	apt install nginx openssl -y;\
 	openssl req -x509 -newkey rsa:4096 -days 365 -nodes \
 	-keyout /etc/ssl/nginx-ss-cert.key \
 	-out /etc/ssl/nginx-ss-cert.crt \
-	-subj "/C=MA/ST=./L=./O=./OU=./CN=localhost"
-COPY ./tools/default /etc/nginx/sites-available/default
-ENTRYPOINT [ "nginx" , "-g" , "daemon off;" ]
+	-subj "/C=MA/ST=Beni Mellal-Khenifra/L=Khouribga/O=42 Network/OU=1337/CN=localhost"
+ENTRYPOINT [ "nginx" ]
+CMD [ "-g" , "daemon off;" ]
