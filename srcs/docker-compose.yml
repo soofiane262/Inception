@@ -1,0 +1,20 @@
+version: "3.6"
+services:
+  nginx:
+    image: nginx
+    ports:
+      - "433:433"
+    build: ./requirements/nginx
+    container_name: nginx
+  mariadb:
+    image: mariadb
+    ports:
+      - "3306:3306"
+    build: ./requirements/mariadb
+    container_name: mariadb
+  wordpress:
+      image: wordpress
+      ports:
+        - "9000:9000"
+      build: ./requirements/wordpress
+      container_name: wordpress
