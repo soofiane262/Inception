@@ -1,20 +1,50 @@
 version: "3.6"
 services:
   nginx:
-    image: nginx
-    ports:
-      - "433:433"
     build: ./requirements/nginx
+    image: nginx
     container_name: nginx
+    restart: on-failure
+    ports:
+      - "443:443"
+    networks:
+      - inception
+    volumes:
+      - wp_nginx:/var/www/html
   mariadb:
+    build: ./requirements/mariadb
     image: mariadb
+    container_name: mariadb
+    restart: on-failure
     ports:
       - "3306:3306"
-    build: ./requirements/mariadb
-    container_name: mariadb
+    networks:
+      - inception
+    volumes:
+      - mariadb:/var/lib/mysql
   wordpress:
-      image: wordpress
-      ports:
-        - "9000:9000"
-      build: ./requirements/wordpress
-      container_name: wordpress
+    build: ./requirements/wordpress
+    image: wordpress
+    container_name: wordpress
+    restart: on-failure
+    ports:
+      - "9000:9000"
+    networks:
+      - inception
+    volumes:
+      - wp_nginx:/var/www/html
+
+networks:
+  inception:
+    driver: bridge
+    name: inception
+
+volumes:
+  wp_nginx:
+    driver_opts:
+      o: bind
+      device: "/Users/sel-mars/Desktop/Inception/volumes/wp_nginx"
+  mariadb:
+    driver_opts:
+      o: bind
+      device: "/Users/sel-mars/Desktop/Inception/volumes/mariadb"
