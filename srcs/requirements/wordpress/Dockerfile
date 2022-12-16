@@ -6,11 +6,11 @@
 #    By: sel-mars <sel-mars@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/15 18:34:32 by sel-mars          #+#    #+#              #
-#    Updated: 2022/12/15 18:34:33 by sel-mars         ###   ########.fr        #
+#    Updated: 2022/12/16 21:37:41 by sel-mars         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 FROM debian:bullseye
-COPY ./tools/script.sh /tmp
+COPY ./tools/nginx.sh /tmp
 ENTRYPOINT [ "bash" ]
-CMD [ "/tmp/script.sh" ]
+CMD [ "/tmp/nginx.sh" ]

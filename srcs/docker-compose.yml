@@ -22,6 +22,15 @@ services:
       - inception
     volumes:
       - mariadb:/var/lib/mysql
+  adminer:
+    build: ./requirements/bonus/adminer
+    image: adminer
+    container_name: adminer
+    restart: on-failure
+    ports:
+      - "8080:8080"
+    networks:
+      - inception
   redis:
     build: ./requirements/bonus/redis
     image: redis

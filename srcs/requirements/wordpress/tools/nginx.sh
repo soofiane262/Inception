@@ -1,17 +1,18 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    script.sh                                          :+:      :+:    :+:    #
+#    nginx.sh                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: sel-mars <sel-mars@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/15 18:33:51 by sel-mars          #+#    #+#              #
-#    Updated: 2022/12/16 15:44:06 by sel-mars         ###   ########.fr        #
+#    Updated: 2022/12/16 21:37:32 by sel-mars         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 #! /bin/bash
 apt-get update -y;
+apt-get upgrade -y; \
 apt-get install -y curl php-fpm php-mysql;
 curl -LO https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar;
 chmod +x wp-cli.phar;

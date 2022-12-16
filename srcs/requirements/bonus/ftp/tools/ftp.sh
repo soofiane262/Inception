@@ -6,12 +6,13 @@
 #    By: sel-mars <sel-mars@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/16 16:47:31 by sel-mars          #+#    #+#              #
-#    Updated: 2022/12/16 20:22:55 by sel-mars         ###   ########.fr        #
+#    Updated: 2022/12/16 21:01:37 by sel-mars         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 #! /bin/bash
 apt-get update -y;
+apt-get upgrade -y; \
 apt-get install vsftpd -y;
 service vsftpd start;
 sed -i "s/listen=NO/listen=YES/" /etc/vsftpd.conf;
