@@ -6,7 +6,7 @@
 #    By: sel-mars <sel-mars@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/15 18:48:40 by sel-mars          #+#    #+#              #
-#    Updated: 2022/12/16 20:34:19 by sel-mars         ###   ########.fr        #
+#    Updated: 2022/12/17 17:03:19 by sel-mars         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,12 @@ build:
 
 up:
 	@docker-compose --verbose -f $(COMPOSE) up
+
+ps:
+	@docker-compose --verbose -f $(COMPOSE) ps
+
+images:
+	@docker-compose --verbose -f $(COMPOSE) images
 
 clean:
 	@docker-compose --verbose -f $(COMPOSE) stop
