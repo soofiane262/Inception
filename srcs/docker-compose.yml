@@ -11,6 +11,8 @@ services:
       - inception
     volumes:
       - wp_nginx:/var/www/html
+    env_file:
+      - .env
   mariadb:
     build: ./requirements/mariadb
     image: mariadb
@@ -22,6 +24,8 @@ services:
       - inception
     volumes:
       - mariadb:/var/lib/mysql
+    env_file:
+      - .env
   adminer:
     build: ./requirements/bonus/adminer
     image: adminer
@@ -31,6 +35,8 @@ services:
       - "8080:8080"
     networks:
       - inception
+    env_file:
+      - .env
   redis:
     build: ./requirements/bonus/redis
     image: redis
@@ -40,19 +46,8 @@ services:
       - "6379:6379"
     networks:
       - inception
-  ftp:
-    build: ./requirements/bonus/ftp
-    image: ftp
-    container_name: ftp
-    restart: on-failure
-    ports:
-      - "20:20"
-      - "21:21"
-      - "40000-40005:40000-40005"
-    networks:
-      - inception
-    volumes:
-      - wp_nginx:/home/souf
+    env_file:
+      - .env
   wordpress:
     build: ./requirements/wordpress
     image: wordpress
@@ -64,6 +59,22 @@ services:
       - inception
     volumes:
       - wp_nginx:/var/www/html
+    env_file:
+      - .env
+  ftp:
+    build: ./requirements/bonus/ftp
+    image: ftp
+    container_name: ftp
+    restart: on-failure
+    ports:
+      - "20-21:20-21"
+      - "40000-40005:40000-40005"
+    networks:
+      - inception
+    volumes:
+      - wp_nginx:/home/souf
+    env_file:
+      - .env
 
 networks:
   inception:
