@@ -10,7 +10,7 @@ services:
     networks:
       - inception
     volumes:
-      - wp_nginx:/var/www/html
+      - web:/var/www/html
     env_file:
       - .env
   mariadb:
@@ -23,7 +23,7 @@ services:
     networks:
       - inception
     volumes:
-      - mariadb:/var/lib/mysql
+      - db:/var/lib/mysql
     env_file:
       - .env
   adminer:
@@ -37,6 +37,8 @@ services:
       - inception
     env_file:
       - .env
+    depends_on:
+      - mariadb
   redis:
     build: ./requirements/bonus/redis
     image: redis
@@ -58,9 +60,13 @@ services:
     networks:
       - inception
     volumes:
-      - wp_nginx:/var/www/html
+      - web:/var/www/html
     env_file:
       - .env
+    depends_on:
+      - nginx
+      - mariadb
+      - redis
   ftp:
     build: ./requirements/bonus/ftp
     image: ftp
@@ -72,9 +78,21 @@ services:
     networks:
       - inception
     volumes:
-      - wp_nginx:/home/souf
+      - web:/home/souf
     env_file:
       - .env
+    depends_on:
+      - wordpress
+  website:
+    build: ./requirements/bonus/website
+    image: website
+    container_name: website
+    restart: on-failure
+    ports:
+      - "5000:443"
+    networks:
+      - inception
+
 
 networks:
   inception:
@@ -82,11 +100,15 @@ networks:
     name: inception
 
 volumes:
-  wp_nginx:
+  web:
     driver_opts:
       o: bind
-      device: "/Users/sel-mars/Desktop/Inception/volumes/wp_nginx"
-  mariadb:
+      device: "/Users/sel-mars/Desktop/Inception/volumes/web"
+  db:
     driver_opts:
       o: bind
-      device: "/Users/sel-mars/Desktop/Inception/volumes/mariadb"
+      device: "/Users/sel-mars/Desktop/Inception/volumes/db"
+  website:
+    driver_opts:
+      o: bind
+      device: "/Users/sel-mars/Desktop/Inception/volumes/website"

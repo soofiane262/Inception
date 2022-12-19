@@ -1,12 +1,12 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    nginx.sh                                           :+:      :+:    :+:    #
+#    wp.sh                                              :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: sel-mars <sel-mars@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/15 18:33:51 by sel-mars          #+#    #+#              #
-#    Updated: 2022/12/18 21:38:34 by sel-mars         ###   ########.fr        #
+#    Updated: 2022/12/19 17:30:31 by sel-mars         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ mkdir -p /var/www/html;
 chown -R www-data:www-data /var/www/html;
 cd /var/www/html;
 runuser -u www-data -- wp core download;
-runuser -u www-data -- wp core config --dbname="$DB_NAME" --dbuser="$DB_USER_NAME" --dbpass="$DB_USER_PSWD" --dbhost='mariadb' --dbprefix='wp_' --skip-check;
+runuser -u www-data -- wp core config --dbname="$MYSQL_DB_NAME" --dbuser="$MYSQL_USER_NAME" --dbpass="$MYSQL_USER_PSWD" --dbhost='mariadb' --dbprefix='wp_' --skip-check;
 runuser -u www-data -- wp core install --url="https://$SERVER_NAME" --title='Inception' --admin_user="$WP_ADMIN_USER_NAME" --admin_password="$WP_ADMIN_USER_PSWD" --admin_email="$WP_ADMIN_USER_MAIL";
 runuser -u www-data -- wp plugin install redis-cache --activate;
 runuser -u www-data -- wp config set WP_REDIS_PORT 6379;
