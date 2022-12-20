@@ -117,11 +117,9 @@ volumes:
     driver_opts:
       type: "none"
       o: bind
-      device: "/Users/sel-mars/Desktop/Inception/volumes/web"
-      # device: "/home/sel-mars/data/inception-volumes/web"
+      device: "/home/sel-mars/data/inception-volumes/web"
   db:
     driver_opts:
       type: "none"
       o: bind
-      device: "/Users/sel-mars/Desktop/Inception/volumes/db"
-      # device: "/home/sel-mars/data/inception-volumes/db"
+      device: "/home/sel-mars/data/inception-volumes/db"
