@@ -1,5 +1,21 @@
 version: "3.6"
 services:
+  cadvisor:
+    build: ./requirements/bonus/cadvisor
+    image: cadvisor
+    container_name: cadvisor
+    restart: on-failure
+    ports:
+      - "8081:8081"
+    networks:
+      - inception
+    volumes:
+      - "/:/rootfs:ro"
+      - "/var/run:/var/run:ro"
+      - "/sys:/sys:ro"
+      - "/var/lib/docker/:/var/lib/docker:ro"
+    env_file:
+      - .env
   nginx:
     build: ./requirements/nginx
     image: nginx
@@ -89,10 +105,9 @@ services:
     container_name: website
     restart: on-failure
     ports:
-      - "5000:443"
+      - "50000:443"
     networks:
       - inception
-
 
 networks:
   inception:
@@ -102,13 +117,11 @@ networks:
 volumes:
   web:
     driver_opts:
+      type: "none"
       o: bind
-      device: "/Users/sel-mars/Desktop/Inception/volumes/web"
+      device: "/Users/souf/Desktop/Inception/volumes/web"
   db:
     driver_opts:
+      type: "none"
       o: bind
-      device: "/Users/sel-mars/Desktop/Inception/volumes/db"
-  website:
-    driver_opts:
-      o: bind
-      device: "/Users/sel-mars/Desktop/Inception/volumes/website"
+      device: "/Users/souf/Desktop/Inception/volumes/db"

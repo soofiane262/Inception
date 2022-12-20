@@ -11,5 +11,6 @@
 # **************************************************************************** #
 
 FROM debian:bullseye
-ENTRYPOINT [ "tail" ]
-CMD [ "-f" ]
+COPY ./tools/cadvisor.sh /tmp/
+ENTRYPOINT [ "bash" ]
+CMD [ "/tmp/cadvisor.sh" ]
