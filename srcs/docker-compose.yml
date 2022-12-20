@@ -90,7 +90,7 @@ services:
     restart: on-failure
     ports:
       - "20-21:20-21"
-      - "40000-40050:40000-40050"
+      - "40000-40005:40000-40005"
     networks:
       - inception
     volumes:
@@ -117,9 +117,11 @@ volumes:
     driver_opts:
       type: "none"
       o: bind
-      device: "/home/sel-mars/data/inception-volumes/web"
+      device: "/Users/sel-mars/Desktop/Inception/volumes/web"
+      # device: "/home/sel-mars/data/inception-volumes/web"
   db:
     driver_opts:
       type: "none"
       o: bind
-      device: "/home/sel-mars/data/inception-volumes/db"
+      device: "/Users/sel-mars/Desktop/Inception/volumes/db"
+      # device: "/home/sel-mars/data/inception-volumes/db"
