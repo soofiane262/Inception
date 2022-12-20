@@ -1,6 +1,6 @@
 server {
 	listen 443 ssl http2;
-	server_name			localhsel-mars.42.frost;
+	server_name			sel-mars.42.fr;
 
 	ssl_certificate		/etc/ssl/nginx-ss-cert.crt;
 	ssl_certificate_key	/etc/ssl/nginx-ss-cert.key;
