@@ -6,11 +6,14 @@
 #    By: sel-mars <sel-mars@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/15 18:34:20 by sel-mars          #+#    #+#              #
-#    Updated: 2022/12/20 08:45:27 by sel-mars         ###   ########.fr        #
+#    Updated: 2022/12/20 14:58:09 by sel-mars         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 FROM debian:bullseye
-COPY ./tools /tmp/
-ENTRYPOINT [ "bash" ]
-CMD [ "/tmp/redis.sh" ]
+RUN apt-get update -y; \
+	apt-get upgrade -y; \
+	apt-get install redis-server -y; \
+	sed -i "s/127.0.0.1/0.0.0.0/" /etc/redis/redis.conf;
+ENTRYPOINT [ "redis-server" ]
+CMD [ "--protected-mode" , "no" ]
