@@ -6,7 +6,7 @@
 #    By: sel-mars <sel-mars@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/15 18:48:40 by sel-mars          #+#    #+#              #
-#    Updated: 2022/12/19 16:59:24 by sel-mars         ###   ########.fr        #
+#    Updated: 2022/12/20 10:54:45 by sel-mars         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,11 +34,16 @@ ps:
 images:
 	@docker-compose --verbose -f $(COMPOSE) images
 
-clean:
+start:
+	@docker-compose --verbose -f $(COMPOSE) start
+
+stop:
 	@docker-compose --verbose -f $(COMPOSE) stop
 
-fclean:
-	@docker-compose --verbose -f $(COMPOSE) down
+down:
+	@docker-compose --verbose -f $(COMPOSE) down --volumes
+
+fclean: down
 	@rm -rf volumes
 
 re: fclean all

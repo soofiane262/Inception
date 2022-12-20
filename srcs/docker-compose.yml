@@ -6,7 +6,7 @@ services:
     container_name: cadvisor
     restart: on-failure
     ports:
-      - "8081:8081"
+      - "8080:8080"
     networks:
       - inception
     volumes:
@@ -48,7 +48,7 @@ services:
     container_name: adminer
     restart: on-failure
     ports:
-      - "8080:8080"
+      - "8081:8081"
     networks:
       - inception
     env_file:
@@ -90,15 +90,13 @@ services:
     restart: on-failure
     ports:
       - "20-21:20-21"
-      - "40000-40005:40000-40005"
+      - "40000-40050:40000-40050"
     networks:
       - inception
     volumes:
       - web:/home/souf
     env_file:
       - .env
-    depends_on:
-      - wordpress
   website:
     build: ./requirements/bonus/website
     image: website
@@ -119,9 +117,9 @@ volumes:
     driver_opts:
       type: "none"
       o: bind
-      device: "/Users/souf/Desktop/Inception/volumes/web"
+      device: "/Users/sel-mars/Desktop/Inception/volumes/web"
   db:
     driver_opts:
       type: "none"
       o: bind
-      device: "/Users/souf/Desktop/Inception/volumes/db"
+      device: "/Users/sel-mars/Desktop/Inception/volumes/db"

@@ -6,11 +6,11 @@
 #    By: sel-mars <sel-mars@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/15 18:34:32 by sel-mars          #+#    #+#              #
-#    Updated: 2022/12/18 21:47:03 by sel-mars         ###   ########.fr        #
+#    Updated: 2022/12/20 08:47:05 by sel-mars         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 FROM debian:bullseye
-COPY ./tools/wp.sh /tmp
+COPY ./tools /tmp
 ENTRYPOINT [ "bash" ]
 CMD [ "/tmp/wp.sh" ]

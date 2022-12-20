@@ -1,27 +1,40 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   style.css                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sel-mars <sel-mars@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/20 09:03:23 by sel-mars          #+#    #+#             */
+/*   Updated: 2022/12/20 10:11:17 by sel-mars         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 /* -------------------------- grids style overrides ------------------------- */
+
 body { font-family: Montserrat; color: #444; }
 #inner { padding: 10px 80px; margin: 80px auto; }
 .section { margin-bottom: 2em; padding-bottom: 2em; border-bottom: 1px solid #ccc; }
 
 /* ------------------------- header, body and footer ------------------------ */
+
 #header { margin: 2.5em 0 3em 0; padding-bottom: 4em; border-bottom: 1px solid #ccc }
 #header h2 { text-transform: uppercase; letter-spacing: 2px; }
 #body, #footer { margin-top: 2em; }
+#footer { padding: 1em 0 5em 0; font-size: 92%; border-top: 1px solid #ccc; text-align: center; }
+#footer p { margin-bottom: 0; text-align: center; }
 .gen-infos { width: 70%; display: inline-block; vertical-align: middle; }
 .gen-infos .info { width: 49%; display: inline-block; vertical-align: middle; }
 .pic { width: 29%; display: inline-block; vertical-align: middle; text-align: center; }
 .pic img { width:60%; border-radius: 50%; }
 
-/* --------------------------------- footer --------------------------------- */
-#footer { padding: 1em 0 5em 0; font-size: 92%; border-top: 1px solid #ccc; text-align: center; }
-#footer p { margin-bottom: 0; text-align: center; }
-
 /* -------------------------- typography and style -------------------------- */
+
 #header h1 { font-size: 48px; text-transform: uppercase; letter-spacing: 3px; }
 h1, h2, h3 { color: #333; }
 h4 { color: #444; }
 h5 { color: #555; }
-p { font-size: 100%; line-height: 18px; padding-right: 3em; }
+p { font-size: 100%; padding-right: 3em; }
 a { color: #86090b }
 a:hover { text-decoration: none; }
 .first h2 { font-style: italic; }
@@ -33,5 +46,10 @@ a:hover { text-decoration: none; }
 .job { position: relative; margin-bottom: 1em; padding-bottom: 1em; border-bottom: 1px solid #ccc; }
 .job h3, .job h4, .job h5 { display: inline-block }
 .job h5 { position: absolute; right: 2em }
+.job .detail h4 { color: #555; text-decoration: underline; margin-left: 50px; margin-bottom: 0 }
+.job .detail h5 { color: #555; margin-left: 50px; margin-bottom: 0; position: relative; }
+.job .detail p { margin: 20px }
+.job .crc { width: 32%; display: inline-block; vertical-align: middle; text-align: center; }
+.job .crc-center { border-left: 1px solid #ccc; border-right: 1px solid #ccc; }
 
 .last { border: none; padding-bottom: 1em }

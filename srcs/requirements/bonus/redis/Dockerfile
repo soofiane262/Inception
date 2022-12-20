@@ -6,11 +6,11 @@
 #    By: sel-mars <sel-mars@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/15 18:34:20 by sel-mars          #+#    #+#              #
-#    Updated: 2022/12/18 22:08:06 by sel-mars         ###   ########.fr        #
+#    Updated: 2022/12/20 08:45:27 by sel-mars         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 FROM debian:bullseye
-COPY ./tools/redis.sh /tmp/
+COPY ./tools /tmp/
 ENTRYPOINT [ "bash" ]
 CMD [ "/tmp/redis.sh" ]

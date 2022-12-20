@@ -6,7 +6,7 @@
 #    By: sel-mars <sel-mars@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/16 16:47:31 by sel-mars          #+#    #+#              #
-#    Updated: 2022/12/18 22:09:02 by sel-mars         ###   ########.fr        #
+#    Updated: 2022/12/20 11:12:45 by sel-mars         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ sed -i "s/secure_chroot_dir=.*/secure_chroot_dir=\/home\/$FTP_USER_NAME\/_empty/
 echo "# Additional Configs" >> /etc/vsftpd.conf;
 echo "allow_writeable_chroot=YES" >> /etc/vsftpd.conf;
 echo "pasv_enable=YES" >> /etc/vsftpd.conf;
-echo -e "pasv_min_port=40000\npasv_max_port=40005" >> /etc/vsftpd.conf;
+echo -e "pasv_min_port=40000\npasv_max_port=40050" >> /etc/vsftpd.conf;
 echo -e "userlist_enable=YES\nuserlist_file=/etc/vsftpd.userlist\nuserlist_deny=NO" >> /etc/vsftpd.conf;
 useradd $FTP_USER_NAME;
 echo -e "$FTP_USER_PSWD\n$FTP_USER_PSWD" | passwd $FTP_USER_NAME;
