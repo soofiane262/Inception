@@ -14,9 +14,9 @@ NAME	=	Inception
 
 COMPOSE	=	srcs/docker-compose.yml
 
-VOLUMES_ROOT	=	/home/sel-mars/data/inception-volumes
+VOLUMES_ROOT	=	/Users/souf/Desktop/Inception/volumes
 
-VOLUMES	=	$(VOLUMES_ROOT)/db $(VOLUMES_ROOT)/web
+VOLUMES	=	$(VOLUMES_ROOT)/web $(VOLUMES_ROOT)/db $(VOLUMES_ROOT)/grafana
 
 all: $(NAME)
 

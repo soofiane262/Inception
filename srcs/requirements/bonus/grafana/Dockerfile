@@ -6,14 +6,18 @@
 #    By: sel-mars <sel-mars@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/15 18:34:20 by sel-mars          #+#    #+#              #
-#    Updated: 2022/12/20 15:03:08 by sel-mars         ###   ########.fr        #
+#    Updated: 2022/12/20 15:26:35 by sel-mars         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 FROM debian:bullseye
+COPY ./tools/ ./conf/ /tmp/
 RUN apt-get update -y; \
 	apt-get upgrade -y; \
-	apt-get install curl -y; \
-	curl -Lk -o /cadvisor https://github.com/google/cadvisor/releases/download/v0.46.0/cadvisor-v0.46.0-linux-amd64; \
-	chmod a+x /cadvisor;
-ENTRYPOINT [ "./cadvisor" ]
+	apt-get install -y gnupg2 software-properties-common curl; \
+	curl -Lk https://packages.grafana.com/gpg.key | apt-key add -; \
+	add-apt-repository "deb https://packages.grafana.com/oss/deb stable main"; \
+	apt-get update -y; \
+	apt-get -y install grafana;
+ENTRYPOINT [ "bash" ]
+CMD [ "/tmp/grafana.sh" ]
