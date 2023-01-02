@@ -6,44 +6,46 @@
 #    By: sel-mars <sel-mars@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/15 18:48:40 by sel-mars          #+#    #+#              #
-#    Updated: 2022/12/20 16:52:25 by sel-mars         ###   ########.fr        #
+#    Updated: 2023/01/02 13:05:44 by sel-mars         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	=	Inception
+NAME			=	Inception
 
-COMPOSE	=	srcs/docker-compose.yml
+CMPS_FILE		=	srcs/docker-compose.yml
 
-VOLUMES_ROOT	=	/Users/souf/Desktop/Inception/volumes
+CMPS_CMD		=	docker-compose
 
-VOLUMES	=	$(VOLUMES_ROOT)/web $(VOLUMES_ROOT)/db $(VOLUMES_ROOT)/grafana
+VOLUMES_ROOT	=	/Users/sel-mars/Desktop/Inception/volumes
+
+VOLUMES			=	$(VOLUMES_ROOT)/web $(VOLUMES_ROOT)/db $(VOLUMES_ROOT)/grafana
 
 all: $(NAME)
 
-$(NAME): $(CMPS)
+$(NAME):
 	@mkdir -p $(VOLUMES)
-	@docker compose --verbose -f $(COMPOSE) up --build
+	@$(CMPS_CMD) --verbose -f $(CMPS_FILE) up --build
 
 build:
-	@docker compose --verbose -f $(COMPOSE) build
+	@$(CMPS_CMD) --verbose -f $(CMPS_FILE) build
 
 up:
-	@docker compose --verbose -f $(COMPOSE) up
+	@$(CMPS_CMD) --verbose -f $(CMPS_FILE) up
 
 ps:
-	@docker compose --verbose -f $(COMPOSE) ps
+	@$(CMPS_CMD) --verbose -f $(CMPS_FILE) ps
 
 images:
-	@docker compose --verbose -f $(COMPOSE) images
+	@$(CMPS_CMD) --verbose -f $(CMPS_FILE) images
 
 start:
-	@docker compose --verbose -f $(COMPOSE) start
+	@$(CMPS_CMD) --verbose -f $(CMPS_FILE) start
 
 stop:
-	@docker compose --verbose -f $(COMPOSE) stop
+	@$(CMPS_CMD) --verbose -f $(CMPS_FILE) stop
 
 down:
-	@docker compose --verbose -f $(COMPOSE) down --volumes
+	@$(CMPS_CMD) --verbose -f $(CMPS_FILE) down --volumes
 
 fclean: down
 	@rm -rf $(VOLUMES_ROOT)
