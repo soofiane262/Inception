@@ -6,12 +6,11 @@
 #    By: sel-mars <sel-mars@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/15 18:33:51 by sel-mars          #+#    #+#              #
-#    Updated: 2023/01/03 19:31:50 by sel-mars         ###   ########.fr        #
+#    Updated: 2023/01/03 19:32:50 by sel-mars         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 #! /bin/bash
-mkdir -p /var/www/html;
 chown -R www-data:www-data /var/www/html;
 cd /var/www/html;
 runuser -u www-data -- wp core download;
