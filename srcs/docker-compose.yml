@@ -115,14 +115,14 @@ volumes:
     driver_opts:
       type: "none"
       o: bind
-      device: "/Users/sel-mars/Desktop/Inception/volumes/web"
+      device: "/home/sel-mars/InceptionVolumes/web"
   db:
     driver_opts:
       type: "none"
       o: bind
-      device: "/Users/sel-mars/Desktop/Inception/volumes/db"
+      device: "/home/sel-mars/InceptionVolumes/db"
   grafana:
     driver_opts:
       type: "none"
       o: bind
-      device: "/Users/sel-mars/Desktop/Inception/volumes/grafana"
+      device: "/home/sel-mars/InceptionVolumes/grafana"
