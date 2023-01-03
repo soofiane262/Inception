@@ -1,6 +1,6 @@
 server {
     listen 80;
-	server_name			sel-mars.42.fr;
+	server_name			localhost;
 
 	ssl_protocols	TLSv1.3;
 
