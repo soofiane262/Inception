@@ -6,7 +6,7 @@
 #    By: sel-mars <sel-mars@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/15 18:48:40 by sel-mars          #+#    #+#              #
-#    Updated: 2023/01/03 20:54:57 by sel-mars         ###   ########.fr        #
+#    Updated: 2023/01/06 19:11:52 by sel-mars         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ CMPS_CMD		=	docker-compose
 
 VOLUMES_ROOT	=	/Users/sel-mars/Desktop/Inception/volumes
 
-VOLUMES			=	$(VOLUMES_ROOT)/web $(VOLUMES_ROOT)/db $(VOLUMES_ROOT)/grafana
+VOLUMES			=	$(VOLUMES_ROOT)/web $(VOLUMES_ROOT)/db
 
 all: $(NAME)
 

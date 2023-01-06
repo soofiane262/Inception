@@ -33,7 +33,7 @@ services:
     container_name: adminer
     restart: on-failure
     ports:
-      - "8081:8081"
+      - "8081:80"
     networks:
       - inception
     env_file:
@@ -100,8 +100,6 @@ services:
       - "3000:3000"
     networks:
       - inception
-    volumes:
-      - grafana:/etc/grafana
     env_file:
       - .env
 
@@ -121,8 +119,3 @@ volumes:
       type: "none"
       o: bind
       device: "/Users/sel-mars/Desktop/Inception/volumes/db"
-  grafana:
-    driver_opts:
-      type: "none"
-      o: bind
-      device: "/Users/sel-mars/Desktop/Inception/volumes/grafana"
