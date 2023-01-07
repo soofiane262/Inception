@@ -8,8 +8,6 @@ services:
     restart: on-failure
     networks:
       - inception
-    volumes:
-      - /:/
     env_file:
       - .env
   influxdb:
