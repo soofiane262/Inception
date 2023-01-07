@@ -1,6 +1,30 @@
 version: "3.6"
 
 services:
+  telegraf:
+    build: ./requirements/bonus/telegraf
+    image: telegraf
+    container_name: telegraf
+    restart: on-failure
+    networks:
+      - inception
+    volumes:
+      - /:/
+    env_file:
+      - .env
+  influxdb:
+    build: ./requirements/bonus/influxdb
+    image: influxdb
+    container_name: influxdb
+    restart: on-failure
+    ports:
+      - "8086:8086"
+    networks:
+      - inception
+    volumes:
+      - influxdb:/var/lib/influxdb
+    env_file:
+      - .env
   nginx:
     build: ./requirements/nginx
     image: nginx
@@ -24,7 +48,7 @@ services:
     networks:
       - inception
     volumes:
-      - db:/var/lib/mysql
+      - mariadb:/var/lib/mysql
     env_file:
       - .env
   adminer:
@@ -91,6 +115,8 @@ services:
       - "40006:80"
     networks:
       - inception
+    env_file:
+      - .env
   grafana:
     build: ./requirements/bonus/grafana
     image: grafana
@@ -114,8 +140,13 @@ volumes:
       type: "none"
       o: bind
       device: "/Users/sel-mars/Desktop/Inception/volumes/web"
-  db:
+  mariadb:
     driver_opts:
       type: "none"
       o: bind
-      device: "/Users/sel-mars/Desktop/Inception/volumes/db"
+      device: "/Users/sel-mars/Desktop/Inception/volumes/mariadb"
+  influxdb:
+    driver_opts:
+      type: "none"
+      o: bind
+      device: "/Users/sel-mars/Desktop/Inception/volumes/influxdb"
