@@ -6,12 +6,12 @@
 #    By: sel-mars <sel-mars@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/15 18:33:51 by sel-mars          #+#    #+#              #
-#    Updated: 2023/01/06 23:59:06 by sel-mars         ###   ########.fr        #
+#    Updated: 2023/01/07 13:44:44 by sel-mars         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 #! /bin/bash
-if [ ! -e /var/www/html/index.php ]; then
+if [ ! -e /run/php/ ]; then
 	cd /var/www/html
 	wp core download --allow-root
 	wp core config --dbname="$MYSQL_DB_NAME" --dbuser="$MYSQL_USER_NAME" --dbpass="$MYSQL_USER_PSWD" --dbhost='mariadb' --dbprefix='wp_' --skip-check --allow-root
