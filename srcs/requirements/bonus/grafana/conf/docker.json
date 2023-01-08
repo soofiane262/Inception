@@ -1,0 +1,1435 @@
+{
+	"annotations": {
+	  "list": [
+		{
+		  "builtIn": 1,
+		  "datasource": {
+			"type": "datasource",
+			"uid": "grafana"
+		  },
+		  "enable": true,
+		  "hide": true,
+		  "iconColor": "rgba(0, 211, 255, 1)",
+		  "name": "Annotations & Alerts",
+		  "target": {
+			"limit": 100,
+			"matchAny": false,
+			"tags": [],
+			"type": "dashboard"
+		  },
+		  "type": "dashboard"
+		}
+	  ]
+	},
+	"description": "Docker Metrics with influx and Telegraf",
+	"editable": true,
+	"fiscalYearStartMonth": 0,
+	"gnetId": 10585,
+	"graphTooltip": 0,
+	"id": 1,
+	"links": [],
+	"liveNow": false,
+	"panels": [
+	  {
+		"datasource": {
+		  "type": "influxdb"
+		},
+		"fieldConfig": {
+		  "defaults": {
+			"color": {
+			  "mode": "thresholds"
+			},
+			"mappings": [],
+			"max": 100,
+			"min": 0,
+			"thresholds": {
+			  "mode": "percentage",
+			  "steps": [
+				{
+				  "color": "semi-dark-green",
+				  "value": null
+				},
+				{
+				  "color": "blue",
+				  "value": 40
+				},
+				{
+				  "color": "yellow",
+				  "value": 60
+				},
+				{
+				  "color": "orange",
+				  "value": 80
+				},
+				{
+				  "color": "red",
+				  "value": 90
+				}
+			  ]
+			},
+			"unit": "percent"
+		  },
+		  "overrides": []
+		},
+		"gridPos": {
+		  "h": 11,
+		  "w": 6,
+		  "x": 0,
+		  "y": 0
+		},
+		"id": 14,
+		"options": {
+		  "orientation": "horizontal",
+		  "reduceOptions": {
+			"calcs": [
+			  "mean"
+			],
+			"fields": "",
+			"values": false
+		  },
+		  "showThresholdLabels": false,
+		  "showThresholdMarkers": true
+		},
+		"pluginVersion": "9.3.2",
+		"targets": [
+		  {
+			"adhocFilters": [],
+			"alias": "",
+			"datasource": {
+			  "type": "influxdb"
+			},
+			"dsType": "influxdb",
+			"groupBy": [
+			  {
+				"params": [
+				  "$__interval"
+				],
+				"type": "time"
+			  },
+			  {
+				"params": [
+				  "null"
+				],
+				"type": "fill"
+			  }
+			],
+			"key": "Q-cf0617a2-3de9-4494-8ac6-876e41beec8b-0",
+			"limit": "",
+			"measurement": "docker_container_mem",
+			"orderByTime": "ASC",
+			"policy": "default",
+			"query": "",
+			"refId": "A",
+			"resultFormat": "time_series",
+			"select": [
+			  [
+				{
+				  "params": [
+					"usage_percent"
+				  ],
+				  "type": "field"
+				},
+				{
+				  "params": [],
+				  "type": "last"
+				}
+			  ]
+			],
+			"slimit": "",
+			"tags": [
+			  {
+				"key": "host",
+				"operator": "=~",
+				"value": "/^$Host$/"
+			  }
+			],
+			"tz": ""
+		  }
+		],
+		"title": "Memory Usage",
+		"transparent": true,
+		"type": "gauge"
+	  },
+	  {
+		"datasource": {
+		  "type": "influxdb"
+		},
+		"fieldConfig": {
+		  "defaults": {
+			"color": {
+			  "fixedColor": "blue",
+			  "mode": "fixed"
+			},
+			"mappings": [
+			  {
+				"options": {
+				  "match": "null",
+				  "result": {
+					"text": "N/A"
+				  }
+				},
+				"type": "special"
+			  }
+			],
+			"max": 50,
+			"min": 0,
+			"thresholds": {
+			  "mode": "percentage",
+			  "steps": [
+				{
+				  "color": "#299c46",
+				  "value": null
+				}
+			  ]
+			},
+			"unit": "none"
+		  },
+		  "overrides": []
+		},
+		"gridPos": {
+		  "h": 5,
+		  "w": 3,
+		  "x": 6,
+		  "y": 0
+		},
+		"id": 16,
+		"links": [],
+		"maxDataPoints": 100,
+		"options": {
+		  "colorMode": "value",
+		  "graphMode": "area",
+		  "justifyMode": "auto",
+		  "orientation": "horizontal",
+		  "reduceOptions": {
+			"calcs": [
+			  "lastNotNull"
+			],
+			"fields": "",
+			"values": false
+		  },
+		  "textMode": "auto"
+		},
+		"pluginVersion": "9.3.2",
+		"targets": [
+		  {
+			"datasource": {
+			  "type": "influxdb"
+			},
+			"groupBy": [
+			  {
+				"params": [
+				  "$__interval"
+				],
+				"type": "time"
+			  },
+			  {
+				"params": [
+				  "none"
+				],
+				"type": "fill"
+			  }
+			],
+			"measurement": "docker",
+			"orderByTime": "ASC",
+			"policy": "default",
+			"refId": "A",
+			"resultFormat": "time_series",
+			"select": [
+			  [
+				{
+				  "params": [
+					"n_images"
+				  ],
+				  "type": "field"
+				},
+				{
+				  "params": [],
+				  "type": "last"
+				}
+			  ]
+			],
+			"tags": [
+			  {
+				"key": "host",
+				"operator": "=~",
+				"value": "/^$Host$/"
+			  }
+			]
+		  }
+		],
+		"title": "Nb of Images",
+		"transparent": true,
+		"type": "stat"
+	  },
+	  {
+		"datasource": {
+		  "type": "influxdb"
+		},
+		"fieldConfig": {
+		  "defaults": {
+			"color": {
+			  "mode": "thresholds"
+			},
+			"mappings": [
+			  {
+				"options": {
+				  "match": "null",
+				  "result": {
+					"text": "N/A"
+				  }
+				},
+				"type": "special"
+			  }
+			],
+			"thresholds": {
+			  "mode": "absolute",
+			  "steps": [
+				{
+				  "color": "dark-red",
+				  "value": null
+				},
+				{
+				  "color": "orange",
+				  "value": 8
+				},
+				{
+				  "color": "#EAB839",
+				  "value": 9
+				},
+				{
+				  "color": "dark-green",
+				  "value": 10
+				}
+			  ]
+			},
+			"unit": "none"
+		  },
+		  "overrides": []
+		},
+		"gridPos": {
+		  "h": 5,
+		  "w": 3,
+		  "x": 9,
+		  "y": 0
+		},
+		"id": 15,
+		"links": [],
+		"maxDataPoints": 100,
+		"options": {
+		  "colorMode": "value",
+		  "graphMode": "area",
+		  "justifyMode": "auto",
+		  "orientation": "horizontal",
+		  "reduceOptions": {
+			"calcs": [
+			  "lastNotNull"
+			],
+			"fields": "",
+			"values": false
+		  },
+		  "textMode": "auto"
+		},
+		"pluginVersion": "9.3.2",
+		"targets": [
+		  {
+			"datasource": {
+			  "type": "influxdb"
+			},
+			"groupBy": [
+			  {
+				"params": [
+				  "$__interval"
+				],
+				"type": "time"
+			  },
+			  {
+				"params": [
+				  "none"
+				],
+				"type": "fill"
+			  }
+			],
+			"measurement": "docker",
+			"orderByTime": "ASC",
+			"policy": "default",
+			"refId": "A",
+			"resultFormat": "time_series",
+			"select": [
+			  [
+				{
+				  "params": [
+					"n_containers_running"
+				  ],
+				  "type": "field"
+				},
+				{
+				  "params": [],
+				  "type": "last"
+				}
+			  ]
+			],
+			"tags": [
+			  {
+				"key": "host",
+				"operator": "=~",
+				"value": "/^$Host$/"
+			  }
+			]
+		  }
+		],
+		"title": "Running Containers",
+		"transparent": true,
+		"type": "stat"
+	  },
+	  {
+		"datasource": {
+		  "type": "influxdb"
+		},
+		"fieldConfig": {
+		  "defaults": {
+			"color": {
+			  "mode": "palette-classic"
+			},
+			"custom": {
+			  "axisCenteredZero": false,
+			  "axisColorMode": "text",
+			  "axisLabel": "",
+			  "axisPlacement": "auto",
+			  "barAlignment": 0,
+			  "drawStyle": "line",
+			  "fillOpacity": 30,
+			  "gradientMode": "none",
+			  "hideFrom": {
+				"legend": false,
+				"tooltip": false,
+				"viz": false
+			  },
+			  "lineInterpolation": "smooth",
+			  "lineWidth": 1,
+			  "pointSize": 2,
+			  "scaleDistribution": {
+				"type": "linear"
+			  },
+			  "showPoints": "always",
+			  "spanNulls": false,
+			  "stacking": {
+				"group": "A",
+				"mode": "none"
+			  },
+			  "thresholdsStyle": {
+				"mode": "dashed"
+			  }
+			},
+			"decimals": 2,
+			"mappings": [],
+			"thresholds": {
+			  "mode": "percentage",
+			  "steps": [
+				{
+				  "color": "transparent",
+				  "value": null
+				}
+			  ]
+			},
+			"unit": "percent"
+		  },
+		  "overrides": []
+		},
+		"gridPos": {
+		  "h": 9,
+		  "w": 12,
+		  "x": 12,
+		  "y": 0
+		},
+		"id": 2,
+		"links": [],
+		"options": {
+		  "legend": {
+			"calcs": [
+			  "min",
+			  "max",
+			  "mean",
+			  "last"
+			],
+			"displayMode": "table",
+			"placement": "right",
+			"showLegend": true
+		  },
+		  "tooltip": {
+			"mode": "multi",
+			"sort": "desc"
+		  }
+		},
+		"pluginVersion": "9.3.2",
+		"targets": [
+		  {
+			"alias": "$tag_container_name",
+			"datasource": {
+			  "type": "influxdb"
+			},
+			"groupBy": [
+			  {
+				"params": [
+				  "$__interval"
+				],
+				"type": "time"
+			  },
+			  {
+				"params": [
+				  "container_name"
+				],
+				"type": "tag"
+			  },
+			  {
+				"params": [
+				  "none"
+				],
+				"type": "fill"
+			  }
+			],
+			"measurement": "docker_container_cpu",
+			"orderByTime": "ASC",
+			"policy": "default",
+			"refId": "A",
+			"resultFormat": "time_series",
+			"select": [
+			  [
+				{
+				  "params": [
+					"usage_percent"
+				  ],
+				  "type": "field"
+				},
+				{
+				  "params": [],
+				  "type": "last"
+				}
+			  ]
+			],
+			"tags": [
+			  {
+				"key": "docker.group",
+				"operator": "=~",
+				"value": "/^$Docker_Stack$/"
+			  },
+			  {
+				"condition": "AND",
+				"key": "host",
+				"operator": "=~",
+				"value": "/^$Host$/"
+			  }
+			]
+		  }
+		],
+		"title": "CPU Usage %",
+		"transparent": true,
+		"type": "timeseries"
+	  },
+	  {
+		"datasource": {
+		  "type": "influxdb"
+		},
+		"fieldConfig": {
+		  "defaults": {
+			"color": {
+			  "mode": "thresholds"
+			},
+			"mappings": [
+			  {
+				"options": {
+				  "match": "null",
+				  "result": {
+					"text": "N/A"
+				  }
+				},
+				"type": "special"
+			  }
+			],
+			"max": 7,
+			"min": 0,
+			"thresholds": {
+			  "mode": "absolute",
+			  "steps": [
+				{
+				  "color": "#299c46",
+				  "value": null
+				},
+				{
+				  "color": "dark-yellow",
+				  "value": 3
+				},
+				{
+				  "color": "orange",
+				  "value": 4
+				},
+				{
+				  "color": "red",
+				  "value": 5
+				}
+			  ]
+			},
+			"unit": "none"
+		  },
+		  "overrides": []
+		},
+		"gridPos": {
+		  "h": 5,
+		  "w": 3,
+		  "x": 6,
+		  "y": 5
+		},
+		"id": 17,
+		"links": [],
+		"maxDataPoints": 100,
+		"options": {
+		  "colorMode": "value",
+		  "graphMode": "area",
+		  "justifyMode": "auto",
+		  "orientation": "horizontal",
+		  "reduceOptions": {
+			"calcs": [
+			  "lastNotNull"
+			],
+			"fields": "",
+			"values": false
+		  },
+		  "textMode": "auto"
+		},
+		"pluginVersion": "9.3.2",
+		"targets": [
+		  {
+			"datasource": {
+			  "type": "influxdb"
+			},
+			"groupBy": [
+			  {
+				"params": [
+				  "$__interval"
+				],
+				"type": "time"
+			  },
+			  {
+				"params": [
+				  "none"
+				],
+				"type": "fill"
+			  }
+			],
+			"measurement": "docker",
+			"orderByTime": "ASC",
+			"policy": "default",
+			"refId": "A",
+			"resultFormat": "time_series",
+			"select": [
+			  [
+				{
+				  "params": [
+					"n_containers_paused"
+				  ],
+				  "type": "field"
+				},
+				{
+				  "params": [],
+				  "type": "last"
+				}
+			  ]
+			],
+			"tags": [
+			  {
+				"key": "host",
+				"operator": "=~",
+				"value": "/^$Host$/"
+			  }
+			]
+		  }
+		],
+		"title": "Paused Containers",
+		"transparent": true,
+		"type": "stat"
+	  },
+	  {
+		"datasource": {
+		  "type": "influxdb"
+		},
+		"fieldConfig": {
+		  "defaults": {
+			"color": {
+			  "mode": "thresholds"
+			},
+			"mappings": [
+			  {
+				"options": {
+				  "match": "null",
+				  "result": {
+					"text": "N/A"
+				  }
+				},
+				"type": "special"
+			  }
+			],
+			"max": 7,
+			"thresholds": {
+			  "mode": "absolute",
+			  "steps": [
+				{
+				  "color": "#299c46",
+				  "value": null
+				},
+				{
+				  "color": "semi-dark-red",
+				  "value": 1
+				}
+			  ]
+			},
+			"unit": "none"
+		  },
+		  "overrides": []
+		},
+		"gridPos": {
+		  "h": 5,
+		  "w": 3,
+		  "x": 9,
+		  "y": 5
+		},
+		"id": 8,
+		"links": [],
+		"maxDataPoints": 100,
+		"options": {
+		  "colorMode": "value",
+		  "graphMode": "area",
+		  "justifyMode": "auto",
+		  "orientation": "horizontal",
+		  "reduceOptions": {
+			"calcs": [
+			  "lastNotNull"
+			],
+			"fields": "",
+			"values": false
+		  },
+		  "textMode": "auto"
+		},
+		"pluginVersion": "9.3.2",
+		"targets": [
+		  {
+			"datasource": {
+			  "type": "influxdb"
+			},
+			"groupBy": [
+			  {
+				"params": [
+				  "$__interval"
+				],
+				"type": "time"
+			  },
+			  {
+				"params": [
+				  "none"
+				],
+				"type": "fill"
+			  }
+			],
+			"measurement": "docker",
+			"orderByTime": "ASC",
+			"policy": "default",
+			"refId": "A",
+			"resultFormat": "time_series",
+			"select": [
+			  [
+				{
+				  "params": [
+					"n_containers_stopped"
+				  ],
+				  "type": "field"
+				},
+				{
+				  "params": [],
+				  "type": "last"
+				}
+			  ]
+			],
+			"tags": [
+			  {
+				"key": "host",
+				"operator": "=~",
+				"value": "/^$Host$/"
+			  }
+			]
+		  }
+		],
+		"title": "Stopped Containers",
+		"transparent": true,
+		"type": "stat"
+	  },
+	  {
+		"datasource": {
+		  "type": "influxdb"
+		},
+		"fieldConfig": {
+		  "defaults": {
+			"color": {
+			  "mode": "palette-classic"
+			},
+			"custom": {
+			  "axisCenteredZero": false,
+			  "axisColorMode": "text",
+			  "axisLabel": "",
+			  "axisPlacement": "auto",
+			  "barAlignment": 0,
+			  "drawStyle": "line",
+			  "fillOpacity": 50,
+			  "gradientMode": "opacity",
+			  "hideFrom": {
+				"legend": false,
+				"tooltip": false,
+				"viz": false
+			  },
+			  "lineInterpolation": "smooth",
+			  "lineWidth": 1,
+			  "pointSize": 5,
+			  "scaleDistribution": {
+				"type": "linear"
+			  },
+			  "showPoints": "never",
+			  "spanNulls": true,
+			  "stacking": {
+				"group": "A",
+				"mode": "none"
+			  },
+			  "thresholdsStyle": {
+				"mode": "off"
+			  }
+			},
+			"decimals": 0,
+			"mappings": [],
+			"thresholds": {
+			  "mode": "absolute",
+			  "steps": [
+				{
+				  "color": "green",
+				  "value": null
+				},
+				{
+				  "color": "red",
+				  "value": 80
+				}
+			  ]
+			},
+			"unit": "decbytes"
+		  },
+		  "overrides": [
+			{
+			  "matcher": {
+				"id": "byRegexp",
+				"options": "/.*read*./"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.transform",
+				  "value": "negative-Y"
+				}
+			  ]
+			}
+		  ]
+		},
+		"gridPos": {
+		  "h": 12,
+		  "w": 12,
+		  "x": 12,
+		  "y": 9
+		},
+		"id": 4,
+		"links": [],
+		"options": {
+		  "legend": {
+			"calcs": [
+			  "mean",
+			  "sum"
+			],
+			"displayMode": "table",
+			"placement": "right",
+			"showLegend": true
+		  },
+		  "tooltip": {
+			"mode": "multi",
+			"sort": "desc"
+		  }
+		},
+		"pluginVersion": "9.3.2",
+		"targets": [
+		  {
+			"alias": "$tag_container_name IO_write",
+			"datasource": {
+			  "type": "influxdb"
+			},
+			"groupBy": [
+			  {
+				"params": [
+				  "$__interval"
+				],
+				"type": "time"
+			  },
+			  {
+				"params": [
+				  "container_name"
+				],
+				"type": "tag"
+			  },
+			  {
+				"params": [
+				  "null"
+				],
+				"type": "fill"
+			  }
+			],
+			"measurement": "docker_container_blkio",
+			"orderByTime": "ASC",
+			"policy": "default",
+			"refId": "A",
+			"resultFormat": "time_series",
+			"select": [
+			  [
+				{
+				  "params": [
+					"io_service_bytes_recursive_write"
+				  ],
+				  "type": "field"
+				},
+				{
+				  "params": [],
+				  "type": "mean"
+				}
+			  ]
+			],
+			"tags": [
+			  {
+				"key": "docker.group",
+				"operator": "=~",
+				"value": "/^$Docker_Stack$/"
+			  },
+			  {
+				"condition": "AND",
+				"key": "host",
+				"operator": "=~",
+				"value": "/^$Host$/"
+			  }
+			]
+		  },
+		  {
+			"alias": "$tag_container_name IO_read",
+			"datasource": {
+			  "type": "influxdb"
+			},
+			"groupBy": [
+			  {
+				"params": [
+				  "$__interval"
+				],
+				"type": "time"
+			  },
+			  {
+				"params": [
+				  "container_name"
+				],
+				"type": "tag"
+			  },
+			  {
+				"params": [
+				  "null"
+				],
+				"type": "fill"
+			  }
+			],
+			"measurement": "docker_container_blkio",
+			"orderByTime": "ASC",
+			"policy": "default",
+			"refId": "B",
+			"resultFormat": "time_series",
+			"select": [
+			  [
+				{
+				  "params": [
+					"io_service_bytes_recursive_read"
+				  ],
+				  "type": "field"
+				},
+				{
+				  "params": [],
+				  "type": "mean"
+				}
+			  ]
+			],
+			"tags": [
+			  {
+				"key": "docker.group",
+				"operator": "=~",
+				"value": "/^$Docker_Stack$/"
+			  },
+			  {
+				"condition": "AND",
+				"key": "host",
+				"operator": "=~",
+				"value": "/^$Host$/"
+			  }
+			]
+		  }
+		],
+		"title": "Disk IO",
+		"transparent": true,
+		"type": "timeseries"
+	  },
+	  {
+		"datasource": {
+		  "type": "influxdb"
+		},
+		"fieldConfig": {
+		  "defaults": {
+			"color": {
+			  "mode": "palette-classic"
+			},
+			"custom": {
+			  "axisCenteredZero": false,
+			  "axisColorMode": "text",
+			  "axisLabel": "",
+			  "axisPlacement": "auto",
+			  "barAlignment": 0,
+			  "drawStyle": "line",
+			  "fillOpacity": 50,
+			  "gradientMode": "opacity",
+			  "hideFrom": {
+				"legend": false,
+				"tooltip": false,
+				"viz": false
+			  },
+			  "lineInterpolation": "smooth",
+			  "lineWidth": 1,
+			  "pointSize": 5,
+			  "scaleDistribution": {
+				"type": "linear"
+			  },
+			  "showPoints": "never",
+			  "spanNulls": false,
+			  "stacking": {
+				"group": "A",
+				"mode": "none"
+			  },
+			  "thresholdsStyle": {
+				"mode": "off"
+			  }
+			},
+			"decimals": 0,
+			"mappings": [],
+			"thresholds": {
+			  "mode": "absolute",
+			  "steps": [
+				{
+				  "color": "green",
+				  "value": null
+				}
+			  ]
+			},
+			"unit": "decbytes"
+		  },
+		  "overrides": [
+			{
+			  "matcher": {
+				"id": "byRegexp",
+				"options": "/.*RX*./"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.transform",
+				  "value": "negative-Y"
+				}
+			  ]
+			}
+		  ]
+		},
+		"gridPos": {
+		  "h": 10,
+		  "w": 12,
+		  "x": 0,
+		  "y": 11
+		},
+		"id": 5,
+		"links": [],
+		"options": {
+		  "legend": {
+			"calcs": [
+			  "mean",
+			  "sum"
+			],
+			"displayMode": "table",
+			"placement": "right",
+			"showLegend": true
+		  },
+		  "tooltip": {
+			"mode": "multi",
+			"sort": "desc"
+		  }
+		},
+		"pluginVersion": "9.3.2",
+		"targets": [
+		  {
+			"alias": "$tag_container_name RX traffic",
+			"datasource": {
+			  "type": "influxdb"
+			},
+			"groupBy": [
+			  {
+				"params": [
+				  "$__interval"
+				],
+				"type": "time"
+			  },
+			  {
+				"params": [
+				  "container_name"
+				],
+				"type": "tag"
+			  },
+			  {
+				"params": [
+				  "none"
+				],
+				"type": "fill"
+			  }
+			],
+			"measurement": "docker_container_net",
+			"orderByTime": "ASC",
+			"policy": "default",
+			"refId": "A",
+			"resultFormat": "time_series",
+			"select": [
+			  [
+				{
+				  "params": [
+					"rx_bytes"
+				  ],
+				  "type": "field"
+				},
+				{
+				  "params": [],
+				  "type": "last"
+				}
+			  ]
+			],
+			"tags": [
+			  {
+				"key": "docker.group",
+				"operator": "=~",
+				"value": "/^$Docker_Stack$/"
+			  },
+			  {
+				"condition": "AND",
+				"key": "host",
+				"operator": "=~",
+				"value": "/^$Host$/"
+			  }
+			]
+		  },
+		  {
+			"alias": "$tag_container_name TX traffic",
+			"datasource": {
+			  "type": "influxdb"
+			},
+			"groupBy": [
+			  {
+				"params": [
+				  "$__interval"
+				],
+				"type": "time"
+			  },
+			  {
+				"params": [
+				  "container_name"
+				],
+				"type": "tag"
+			  },
+			  {
+				"params": [
+				  "none"
+				],
+				"type": "fill"
+			  }
+			],
+			"measurement": "docker_container_net",
+			"orderByTime": "ASC",
+			"policy": "default",
+			"refId": "B",
+			"resultFormat": "time_series",
+			"select": [
+			  [
+				{
+				  "params": [
+					"tx_bytes"
+				  ],
+				  "type": "field"
+				},
+				{
+				  "params": [],
+				  "type": "last"
+				}
+			  ]
+			],
+			"tags": [
+			  {
+				"key": "docker.group",
+				"operator": "=~",
+				"value": "/^$Docker_Stack$/"
+			  },
+			  {
+				"condition": "AND",
+				"key": "host",
+				"operator": "=~",
+				"value": "/^$Host$/"
+			  }
+			]
+		  }
+		],
+		"title": "Traffic",
+		"transparent": true,
+		"type": "timeseries"
+	  },
+	  {
+		"datasource": {
+		  "type": "influxdb"
+		},
+		"fieldConfig": {
+		  "defaults": {
+			"color": {
+			  "mode": "palette-classic"
+			},
+			"custom": {
+			  "axisCenteredZero": false,
+			  "axisColorMode": "text",
+			  "axisLabel": "",
+			  "axisPlacement": "left",
+			  "barAlignment": 0,
+			  "drawStyle": "line",
+			  "fillOpacity": 50,
+			  "gradientMode": "opacity",
+			  "hideFrom": {
+				"legend": false,
+				"tooltip": false,
+				"viz": false
+			  },
+			  "lineInterpolation": "smooth",
+			  "lineStyle": {
+				"fill": "solid"
+			  },
+			  "lineWidth": 1,
+			  "pointSize": 3,
+			  "scaleDistribution": {
+				"type": "linear"
+			  },
+			  "showPoints": "always",
+			  "spanNulls": false,
+			  "stacking": {
+				"group": "A",
+				"mode": "none"
+			  },
+			  "thresholdsStyle": {
+				"mode": "dashed"
+			  }
+			},
+			"decimals": 2,
+			"mappings": [],
+			"thresholds": {
+			  "mode": "percentage",
+			  "steps": [
+				{
+				  "color": "transparent",
+				  "value": null
+				}
+			  ]
+			},
+			"unit": "percent"
+		  },
+		  "overrides": []
+		},
+		"gridPos": {
+		  "h": 11,
+		  "w": 24,
+		  "x": 0,
+		  "y": 21
+		},
+		"id": 3,
+		"links": [],
+		"options": {
+		  "legend": {
+			"calcs": [
+			  "mean",
+			  "max"
+			],
+			"displayMode": "table",
+			"placement": "right",
+			"showLegend": true
+		  },
+		  "tooltip": {
+			"mode": "multi",
+			"sort": "asc"
+		  }
+		},
+		"pluginVersion": "9.3.2",
+		"targets": [
+		  {
+			"alias": "$tag_container_name",
+			"datasource": {
+			  "type": "influxdb"
+			},
+			"groupBy": [
+			  {
+				"params": [
+				  "$__interval"
+				],
+				"type": "time"
+			  },
+			  {
+				"params": [
+				  "container_name"
+				],
+				"type": "tag"
+			  },
+			  {
+				"params": [
+				  "none"
+				],
+				"type": "fill"
+			  }
+			],
+			"measurement": "docker_container_mem",
+			"orderByTime": "ASC",
+			"policy": "default",
+			"refId": "A",
+			"resultFormat": "time_series",
+			"select": [
+			  [
+				{
+				  "params": [
+					"usage_percent"
+				  ],
+				  "type": "field"
+				},
+				{
+				  "params": [],
+				  "type": "mean"
+				}
+			  ]
+			],
+			"tags": [
+			  {
+				"key": "docker.group",
+				"operator": "=~",
+				"value": "/^$Docker_Stack$/"
+			  },
+			  {
+				"condition": "AND",
+				"key": "host",
+				"operator": "=~",
+				"value": "/^$Host$/"
+			  }
+			]
+		  }
+		],
+		"title": "Mem Usage %",
+		"transparent": true,
+		"type": "timeseries"
+	  }
+	],
+	"refresh": "10s",
+	"schemaVersion": 37,
+	"style": "dark",
+	"tags": [
+	  "Docker",
+	  "Telegraf",
+	  "InfluxDB"
+	],
+	"templating": {
+	  "list": [
+		{
+		  "current": {
+			"selected": false,
+			"text": "All",
+			"value": "$__all"
+		  },
+		  "datasource": {
+			"type": "influxdb"
+		  },
+		  "definition": "",
+		  "hide": 0,
+		  "includeAll": true,
+		  "label": "Host",
+		  "multi": true,
+		  "name": "Host",
+		  "options": [],
+		  "query": "SHOW TAG VALUES WITH KEY = \"host\"",
+		  "refresh": 1,
+		  "regex": "",
+		  "skipUrlSync": false,
+		  "sort": 0,
+		  "tagValuesQuery": "",
+		  "tagsQuery": "",
+		  "type": "query"
+		},
+		{
+		  "current": {
+			"selected": false,
+			"text": "All",
+			"value": "$__all"
+		  },
+		  "datasource": {
+			"type": "influxdb"
+		  },
+		  "definition": "",
+		  "hide": 0,
+		  "includeAll": true,
+		  "label": "Docker_Stack",
+		  "multi": true,
+		  "name": "Docker_Stack",
+		  "options": [],
+		  "query": "SHOW TAG VALUES WITH KEY = \"docker.group\"  ",
+		  "refresh": 1,
+		  "regex": "",
+		  "skipUrlSync": false,
+		  "sort": 0,
+		  "tagValuesQuery": "",
+		  "tagsQuery": "",
+		  "type": "query",
+		  "useTags": false
+		}
+	  ]
+	},
+	"time": {
+	  "from": "now-5m",
+	  "to": "now"
+	},
+	"timepicker": {
+	  "refresh_intervals": [
+		"5s",
+		"10s",
+		"30s",
+		"1m",
+		"5m",
+		"15m",
+		"30m",
+		"1h",
+		"2h",
+		"1d"
+	  ],
+	  "time_options": [
+		"5m",
+		"15m",
+		"1h",
+		"6h",
+		"12h",
+		"24h",
+		"2d",
+		"7d",
+		"30d"
+	  ]
+	},
+	"timezone": "",
+	"title": "Docker Monitoring & Stats",
+	"version": 1,
+	"weekStart": ""
+  }

@@ -1,0 +1,16 @@
+apiVersion: 1
+datasources:
+- orgId: 1
+  version: 2
+  name: InfluxDB
+  type: influxdb
+  access: proxy
+  url: http://influxdb:8086
+  user: soufiane
+  database: telegraf
+  isDefault: true
+  jsonData:
+    httpMode: POST
+    tlsSkipVerify: true
+  secureJsonData:
+    password: $INFLUXDB_USER_PSWD

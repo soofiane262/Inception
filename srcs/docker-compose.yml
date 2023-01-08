@@ -1,15 +1,6 @@
 version: "3.6"
 
 services:
-  telegraf:
-    build: ./requirements/bonus/telegraf
-    image: telegraf
-    container_name: telegraf
-    restart: on-failure
-    networks:
-      - inception
-    env_file:
-      - .env
   influxdb:
     build: ./requirements/bonus/influxdb
     image: influxdb
@@ -23,6 +14,19 @@ services:
       - influxdb:/var/lib/influxdb
     env_file:
       - .env
+  telegraf:
+    build: ./requirements/bonus/telegraf
+    image: telegraf
+    container_name: telegraf
+    restart: on-failure
+    networks:
+      - inception
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    env_file:
+      - .env
+    depends_on:
+      - influxdb
   nginx:
     build: ./requirements/nginx
     image: nginx
@@ -126,6 +130,9 @@ services:
       - inception
     env_file:
       - .env
+    depends_on:
+      - influxdb
+      - telegraf
 
 networks:
   inception:
