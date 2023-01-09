@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 FROM debian:bullseye
-COPY ./tools/ ./conf /tmp/
+COPY ./tools/ ./conf/ /tmp/
 RUN apt-get update -y; \
 	apt-get upgrade -y; \
 	apt-get install -y gnupg2 software-properties-common curl; \

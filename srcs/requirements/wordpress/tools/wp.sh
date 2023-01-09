@@ -12,9 +12,10 @@
 
 #! /bin/bash
 if [ ! -e /var/www/html/wp-config.php ]; then
-	echo -e "\n\e[3m\e[1;37m# --------------------------- Configuring WordPress -------------------------- #\e[0m\n"
+	echo -e "\n\e[3m\e[1;37m# ------------------------- Configuring Wordpress 1/2 ------------------------ #\e[0m\n"
 	cd /var/www/html
 	wp core download --allow-root
+	chown -R www-data:www-data /var/www/html
 	wp core config --dbname="$MYSQL_WP_DBNAME" --dbuser="$MYSQL_USERNAME" --dbpass="$MYSQL_PASSWORD" --dbhost='mariadb' --dbprefix='wp_' --skip-check --allow-root
 	wp core install --url="https://$DOMAIN_NAME" --title='Inception' --admin_user="$WP_ADMIN_USERNAME" --admin_password="$WP_ADMIN_PASSWORD" --admin_email="$WP_ADMIN_EMAIL" --allow-root
 	wp plugin install redis-cache --activate --allow-root
@@ -23,6 +24,8 @@ if [ ! -e /var/www/html/wp-config.php ]; then
 	wp redis enable --allow-root
 	wp user create $WP_AUTHOR_USERNAME $WP_AUTHOR_EMAIL --role=author --user_pass=$WP_AUTHOR_PASSWORD --allow-root
 fi
+echo -e "\n\e[3m\e[1;37m# ------------------------- Configuring Wordpress 2/2 ------------------------ #\e[0m\n"
+sed -i -e "s/listen =.*/listen = 9000/" /etc/php/$(wp --info | grep php.ini | cut -d'/' -f4 )/fpm/pool.d/www.conf
 service php$(wp --info | grep php.ini | cut -d'/' -f4 )-fpm start
 service php$(wp --info | grep php.ini | cut -d'/' -f4 )-fpm stop
 echo -e "\n\e[3m\e[1;37m# ---------------------------------------------------------------------------- #\e[0m\n

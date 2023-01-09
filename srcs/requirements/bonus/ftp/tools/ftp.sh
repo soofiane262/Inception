@@ -14,7 +14,7 @@
 if [ ! -e /etc/vsftpd.userlist ]; then
 	echo -e "\n\e[3m\e[1;37m# ---------------------------- Configuring FTP 1/2 --------------------------- #\e[0m\n"
 	sed -i "s/listen=NO/listen=YES/" /etc/vsftpd.conf
-	sed -i "s/listen_ipv6=YES/#listen_ipv6=YES/" /etc/vsftpd.conf
+	sed -i "s/listen_ipv6=YES/#listen_ipv6=NO/" /etc/vsftpd.conf
 	sed -i "s/#write_enable=YES/write_enable=YES/" /etc/vsftpd.conf
 	sed -i "0,/#chroot_local_user=YES/ s/#chroot_local_user=YES/chroot_local_user=YES/" /etc/vsftpd.conf
 	sed -i "s/secure_chroot_dir=.*/secure_chroot_dir=\/home\/$FTP_USERNAME\/_empty/" /etc/vsftpd.conf
