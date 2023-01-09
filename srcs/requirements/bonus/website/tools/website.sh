@@ -6,12 +6,13 @@
 #    By: sel-mars <sel-mars@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/02 16:09:33 by sel-mars          #+#    #+#              #
-#    Updated: 2023/01/09 19:25:53 by sel-mars         ###   ########.fr        #
+#    Updated: 2023/01/09 20:47:57 by sel-mars         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 #! /bin/bash
+sed -i "s/server_name domain-name/server_name $DOMAIN_NAME/" /etc/nginx/sites-available/default
 echo -e "\n\e[3m\e[1;37m# ---------------------------------------------------------------------------- #\e[0m\n
-\e[3m\e[1;37m                                Starting Redis                                \e[0m
+\e[3m\e[1;37m                               Starting Website                               \e[0m
 \n\e[3m\e[1;37m# ---------------------------------------------------------------------------- #\e[0m\n"
 nginx -g 'daemon off;'

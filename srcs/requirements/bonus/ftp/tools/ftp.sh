@@ -6,13 +6,13 @@
 #    By: sel-mars <sel-mars@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/16 16:47:31 by sel-mars          #+#    #+#              #
-#    Updated: 2023/01/09 18:30:10 by sel-mars         ###   ########.fr        #
+#    Updated: 2023/01/09 20:41:00 by sel-mars         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 #! /bin/bash
 if [ ! -e /etc/vsftpd.userlist ]; then
-	echo -e "\n\e[3m\e[1;37m# ------------------------------ Configuring FTP ----------------------------- #\e[0m\n"
+	echo -e "\n\e[3m\e[1;37m# ---------------------------- Configuring FTP 1/2 --------------------------- #\e[0m\n"
 	sed -i "s/listen=NO/listen=YES/" /etc/vsftpd.conf
 	sed -i "s/listen_ipv6=YES/#listen_ipv6=YES/" /etc/vsftpd.conf
 	sed -i "s/#write_enable=YES/write_enable=YES/" /etc/vsftpd.conf
@@ -27,6 +27,7 @@ if [ ! -e /etc/vsftpd.userlist ]; then
 	echo -e "$FTP_PASSWORD\n$FTP_PASSWORD" | passwd $FTP_USERNAME
 	echo $FTP_USERNAME >> /etc/vsftpd.userlist
 	if [ ! -d /home/$FTP_USERNAME/_empty ]; then
+		echo -e "\n\e[3m\e[1;37m# ---------------------------- Configuring FTP 2/2 --------------------------- #\e[0m\n"
 		mkdir -p /home/$FTP_USERNAME/_empty
 		chown -R $FTP_USERNAME:$FTP_USERNAME /home/$FTP_USERNAME
 		chmod a-w /home/$FTP_USERNAME/_empty
