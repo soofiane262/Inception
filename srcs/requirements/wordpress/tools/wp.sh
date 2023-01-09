@@ -6,12 +6,13 @@
 #    By: sel-mars <sel-mars@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/15 18:33:51 by sel-mars          #+#    #+#              #
-#    Updated: 2023/01/07 13:44:44 by sel-mars         ###   ########.fr        #
+#    Updated: 2023/01/09 13:25:53 by sel-mars         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 #! /bin/bash
 if [ ! -e /run/php/ ]; then
+	echo -e "\n\e[3m\e[1;37m# --------------------------- Configuring WordPress -------------------------- #\e[0m\n"
 	cd /var/www/html
 	wp core download --allow-root
 	wp core config --dbname="$MYSQL_DB_NAME" --dbuser="$MYSQL_USER_NAME" --dbpass="$MYSQL_USER_PSWD" --dbhost='mariadb' --dbprefix='wp_' --skip-check --allow-root
@@ -24,4 +25,7 @@ if [ ! -e /run/php/ ]; then
 	service php7.4-fpm start
 	service php7.4-fpm stop
 fi
+echo -e "\n\e[3m\e[1;37m# ---------------------------------------------------------------------------- #\e[0m\n
+\e[3m\e[1;37m                              Starting WordPress                              \e[0m
+\e[3m\e[1;37m\n# ---------------------------------------------------------------------------- #\e[0m\n"
 php-fpm7.4 -F

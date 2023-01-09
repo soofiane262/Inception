@@ -6,7 +6,7 @@
 #    By: sel-mars <sel-mars@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/15 18:48:40 by sel-mars          #+#    #+#              #
-#    Updated: 2023/01/08 18:40:57 by sel-mars         ###   ########.fr        #
+#    Updated: 2023/01/09 13:29:35 by sel-mars         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CMPS_FILE		=	srcs/docker-compose.yml
 
 CMPS_CMD		=	docker-compose
 
-VOLUMES_ROOT	=	/Users/sel-mars/Desktop/Inception/volumes
+VOLUMES_ROOT	=	/home/sel-mars/data/inception-volumes
 
 VOLUMES			=	$(VOLUMES_ROOT)/web $(VOLUMES_ROOT)/mariadb $(VOLUMES_ROOT)/influxdb
 
@@ -29,27 +29,18 @@ $(NAME):
 build:
 	@$(CMPS_CMD) -f $(CMPS_FILE) build
 
-up:
-	@$(CMPS_CMD) -f $(CMPS_FILE) up
-
 ps:
 	@$(CMPS_CMD) -f $(CMPS_FILE) ps
 
-images:
-	@$(CMPS_CMD) -f $(CMPS_FILE) images
-
-start:
-	@$(CMPS_CMD) -f $(CMPS_FILE) start
-
-stop:
-	@$(CMPS_CMD) -f $(CMPS_FILE) stop
+up:
+	@$(CMPS_CMD) -f $(CMPS_FILE) up
 
 down:
 	@$(CMPS_CMD) -f $(CMPS_FILE) down --volumes
 
 fclean: down
-	@rm -rf $(VOLUMES)
+	@rm -rf $(VOLUMES_ROOT)
 
 re: fclean all
 
-.PHONY: all build up ps images start stop down fclean re
+.PHONY: all build ps up down fclean re

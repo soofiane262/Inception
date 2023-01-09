@@ -21,8 +21,8 @@
 		}
 	  ]
 	},
-	"description": "Docker Metrics with influx and Telegraf",
-	"editable": true,
+	"description": "Docker Metrics with InfluxDB and Telegraf",
+	"editable": false,
 	"fiscalYearStartMonth": 0,
 	"gnetId": 10585,
 	"graphTooltip": 0,
@@ -40,7 +40,7 @@
 			  "mode": "thresholds"
 			},
 			"mappings": [],
-			"max": 100,
+			"max": 1073741824,
 			"min": 0,
 			"thresholds": {
 			  "mode": "percentage",
@@ -67,7 +67,7 @@
 				}
 			  ]
 			},
-			"unit": "percent"
+			"unit": "decbytes"
 		  },
 		  "overrides": []
 		},
@@ -125,7 +125,7 @@
 			  [
 				{
 				  "params": [
-					"usage_percent"
+					"usage"
 				  ],
 				  "type": "field"
 				},
@@ -281,6 +281,8 @@
 				"type": "special"
 			  }
 			],
+			"max": 10,
+			"min": 0,
 			"thresholds": {
 			  "mode": "absolute",
 			  "steps": [
@@ -668,6 +670,7 @@
 			  }
 			],
 			"max": 7,
+			"min": 0,
 			"thresholds": {
 			  "mode": "absolute",
 			  "steps": [

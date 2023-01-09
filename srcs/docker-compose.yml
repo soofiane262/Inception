@@ -27,6 +27,31 @@ services:
       - .env
     depends_on:
       - influxdb
+  grafana:
+    build: ./requirements/bonus/grafana
+    image: grafana
+    container_name: grafana
+    restart: on-failure
+    ports:
+      - "3000:3000"
+    networks:
+      - inception
+    env_file:
+      - .env
+    depends_on:
+      - influxdb
+      - telegraf
+  website:
+    build: ./requirements/bonus/website
+    image: website
+    container_name: website
+    restart: on-failure
+    ports:
+      - "40006:80"
+    networks:
+      - inception
+    env_file:
+      - .env
   nginx:
     build: ./requirements/nginx
     image: nginx
@@ -64,8 +89,6 @@ services:
       - inception
     env_file:
       - .env
-    depends_on:
-      - mariadb
   redis:
     build: ./requirements/bonus/redis
     image: redis
@@ -108,31 +131,6 @@ services:
       - web:/home/souf
     env_file:
       - .env
-  website:
-    build: ./requirements/bonus/website
-    image: website
-    container_name: website
-    restart: on-failure
-    ports:
-      - "40006:80"
-    networks:
-      - inception
-    env_file:
-      - .env
-  grafana:
-    build: ./requirements/bonus/grafana
-    image: grafana
-    container_name: grafana
-    restart: on-failure
-    ports:
-      - "3000:3000"
-    networks:
-      - inception
-    env_file:
-      - .env
-    depends_on:
-      - influxdb
-      - telegraf
 
 networks:
   inception:
@@ -144,14 +142,14 @@ volumes:
     driver_opts:
       type: "none"
       o: bind
-      device: "/Users/sel-mars/Desktop/Inception/volumes/web"
+      device: "/home/sel-mars/data/inception-volumes/web"
   mariadb:
     driver_opts:
       type: "none"
       o: bind
-      device: "/Users/sel-mars/Desktop/Inception/volumes/mariadb"
+      device: "/home/sel-mars/data/inception-volumes/mariadb"
   influxdb:
     driver_opts:
       type: "none"
       o: bind
-      device: "/Users/sel-mars/Desktop/Inception/volumes/influxdb"
+      device: "/home/sel-mars/data/inception-volumes/influxdb"
