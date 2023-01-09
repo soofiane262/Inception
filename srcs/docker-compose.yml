@@ -131,6 +131,8 @@ services:
       - web:/home/souf
     env_file:
       - .env
+    depends_on:
+      - wordpress
 
 networks:
   inception:

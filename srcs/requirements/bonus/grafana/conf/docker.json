@@ -82,7 +82,7 @@
 		  "orientation": "horizontal",
 		  "reduceOptions": {
 			"calcs": [
-			  "mean"
+			  "lastNotNull"
 			],
 			"fields": "",
 			"values": false
