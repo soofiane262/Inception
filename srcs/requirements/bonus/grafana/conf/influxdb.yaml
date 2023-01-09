@@ -6,11 +6,11 @@ datasources:
   type: influxdb
   access: proxy
   url: http://influxdb:8086
-  user: soufiane
-  database: telegraf
+  user: $INFLUXDB_TELEGRAF_USERNAME
+  database: $INFLUXDB_TELEGRAF_DBNAME
   isDefault: true
   jsonData:
     httpMode: POST
     tlsSkipVerify: true
   secureJsonData:
-    password: $INFLUXDB_USER_PSWD
+    password: $INFLUXDB_TELEGRAF_PASSWORD

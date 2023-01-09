@@ -6,7 +6,7 @@
 #    By: sel-mars <sel-mars@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/15 18:34:32 by sel-mars          #+#    #+#              #
-#    Updated: 2023/01/06 23:59:16 by sel-mars         ###   ########.fr        #
+#    Updated: 2023/01/09 19:29:17 by sel-mars         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,6 @@ RUN apt-get update -y; \
 	chmod +x wp-cli.phar; \
 	mv wp-cli.phar /usr/local/bin/wp; \
 	mkdir -p /var/www/html;
-COPY ./tools /tmp
+COPY ./tools/ /tmp
 ENTRYPOINT [ "bash" ]
 CMD [ "/tmp/wp.sh" ]
