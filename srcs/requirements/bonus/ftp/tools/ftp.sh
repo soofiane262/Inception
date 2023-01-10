@@ -6,7 +6,7 @@
 #    By: sel-mars <sel-mars@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/16 16:47:31 by sel-mars          #+#    #+#              #
-#    Updated: 2023/01/10 16:00:17 by sel-mars         ###   ########.fr        #
+#    Updated: 2023/01/10 16:22:47 by sel-mars         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,11 +29,9 @@ if [ ! -e /etc/vsftpd.userlist ]; then
 	usermod -aG www-pub $FTP_USERNAME
 	echo $FTP_USERNAME >> /etc/vsftpd.userlist
 	chown -R $FTP_USERNAME:www-pub /home/$FTP_USERNAME
-	if [ ! -d /home/$FTP_USERNAME/_empty ]; then
-		echo -e "\n\e[3m\e[1;37m# ---------------------------- Configuring FTP 2/2 --------------------------- #\e[0m\n"
-		mkdir -p /home/$FTP_USERNAME/_empty
-		chmod a-w /home/$FTP_USERNAME/_empty
-	fi
+	chmod 2775 /home/$FTP_USERNAME
+	mkdir -p /home/$FTP_USERNAME/_empty
+	chmod a-w /home/$FTP_USERNAME/_empty
 fi
 echo -e "\n\e[3m\e[1;37m# ---------------------------------------------------------------------------- #\e[0m\n
 \e[3m\e[1;37m                               Starting FTP Server                              \e[0m
