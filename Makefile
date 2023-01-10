@@ -6,13 +6,13 @@
 #    By: sel-mars <sel-mars@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/15 18:48:40 by sel-mars          #+#    #+#              #
-#    Updated: 2023/01/10 12:26:41 by sel-mars         ###   ########.fr        #
+#    Updated: 2023/01/10 12:29:22 by sel-mars         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			=	inception
 
-CMPS_CMD		=	docker-compose
+CMPS_CMD		=	docker compose
 
 CMPS_FILE		=	srcs/docker-compose.yml
 
