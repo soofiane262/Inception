@@ -144,14 +144,14 @@ volumes:
     driver_opts:
       type: "none"
       o: bind
-      device: "/home/sel-mars/data/inception-volumes/web"
+      device: "/home/sel-mars/data/web"
   mariadb:
     driver_opts:
       type: "none"
       o: bind
-      device: "/home/sel-mars/data/inception-volumes/mariadb"
+      device: "/home/sel-mars/data/mariadb"
   influxdb:
     driver_opts:
       type: "none"
       o: bind
-      device: "/home/sel-mars/data/inception-volumes/influxdb"
+      device: "/home/sel-mars/data/influxdb"

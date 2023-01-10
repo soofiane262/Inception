@@ -6,7 +6,7 @@
 #    By: sel-mars <sel-mars@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/15 18:48:40 by sel-mars          #+#    #+#              #
-#    Updated: 2023/01/10 12:29:22 by sel-mars         ###   ########.fr        #
+#    Updated: 2023/01/10 12:44:26 by sel-mars         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CMPS_CMD		=	docker compose
 
 CMPS_FILE		=	srcs/docker-compose.yml
 
-VOLUMES_ROOT	=	/home/sel-mars/data/inception-volumes
+VOLUMES_ROOT	=	/home/sel-mars/data/
 
 VOLUMES			=	$(VOLUMES_ROOT)/web $(VOLUMES_ROOT)/mariadb $(VOLUMES_ROOT)/influxdb
 
@@ -44,8 +44,8 @@ voldown:
 	@$(COMPOSE) down --volumes
 
 fclean: voldown
-	@rm -rf $(VOLUMES_ROOT)
+	@rm -rf $(VOLUMES)
 
-re: fclean all
+re: fclean $(NAME)
 
 .PHONY: all volumes build ps up down voldown fclean re
