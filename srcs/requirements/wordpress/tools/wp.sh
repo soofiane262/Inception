@@ -6,14 +6,17 @@
 #    By: sel-mars <sel-mars@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/15 18:33:51 by sel-mars          #+#    #+#              #
-#    Updated: 2023/01/10 15:15:49 by sel-mars         ###   ########.fr        #
+#    Updated: 2023/01/10 16:00:30 by sel-mars         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 #! /bin/bash
 if [ ! -e /var/www/html/wp-config.php ]; then
 	echo -e "\n\e[3m\e[1;37m# ------------------------- Configuring Wordpress 1/2 ------------------------ #\e[0m\n"
-	chown -R www-data:www-data /var/www/html
+	groupadd www-pub
+	usermod -aG www-pub www-data
+	chown -R www-data:www-pub /var/www
+	chmod 2775 /var/www
 	runuser -u www-data -- wp core download --path="/var/www/html"
 	runuser -u www-data -- wp core config --dbname="$MYSQL_WP_DBNAME" --dbuser="$MYSQL_USERNAME" --dbpass="$MYSQL_PASSWORD" --dbhost='mariadb' --dbprefix='wp_' --skip-check --path="/var/www/html"
 	runuser -u www-data -- wp core install --url="https://$DOMAIN_NAME" --title='Inception' --admin_user="$WP_ADMIN_USERNAME" --admin_password="$WP_ADMIN_PASSWORD" --admin_email="$WP_ADMIN_EMAIL" --path="/var/www/html"
