@@ -25,10 +25,10 @@
 	"editable": false,
 	"fiscalYearStartMonth": 0,
 	"gnetId": 10585,
-	"graphTooltip": 0,
+	"graphTooltip": 1,
 	"id": 1,
 	"links": [],
-	"liveNow": false,
+	"liveNow": true,
 	"panels": [
 	  {
 		"datasource": {
@@ -40,7 +40,7 @@
 			  "mode": "thresholds"
 			},
 			"mappings": [],
-			"max": 1073741824,
+			"max": 2147483648,
 			"min": 0,
 			"thresholds": {
 			  "mode": "percentage",
@@ -72,7 +72,7 @@
 		  "overrides": []
 		},
 		"gridPos": {
-		  "h": 11,
+		  "h": 12,
 		  "w": 6,
 		  "x": 0,
 		  "y": 0
@@ -115,7 +115,7 @@
 			],
 			"key": "Q-cf0617a2-3de9-4494-8ac6-876e41beec8b-0",
 			"limit": "",
-			"measurement": "docker_container_mem",
+			"measurement": "mem",
 			"orderByTime": "ASC",
 			"policy": "default",
 			"query": "",
@@ -125,7 +125,7 @@
 			  [
 				{
 				  "params": [
-					"usage"
+					"used"
 				  ],
 				  "type": "field"
 				},
@@ -171,7 +171,7 @@
 				"type": "special"
 			  }
 			],
-			"max": 50,
+			"max": 70,
 			"min": 0,
 			"thresholds": {
 			  "mode": "percentage",
@@ -187,7 +187,7 @@
 		  "overrides": []
 		},
 		"gridPos": {
-		  "h": 5,
+		  "h": 6,
 		  "w": 3,
 		  "x": 6,
 		  "y": 0
@@ -309,7 +309,7 @@
 		  "overrides": []
 		},
 		"gridPos": {
-		  "h": 5,
+		  "h": 6,
 		  "w": 3,
 		  "x": 9,
 		  "y": 0
@@ -393,79 +393,50 @@
 			  "mode": "palette-classic"
 			},
 			"custom": {
-			  "axisCenteredZero": false,
-			  "axisColorMode": "text",
-			  "axisLabel": "",
-			  "axisPlacement": "auto",
-			  "barAlignment": 0,
-			  "drawStyle": "line",
-			  "fillOpacity": 30,
-			  "gradientMode": "none",
-			  "hideFrom": {
-				"legend": false,
-				"tooltip": false,
-				"viz": false
-			  },
-			  "lineInterpolation": "smooth",
-			  "lineWidth": 1,
-			  "pointSize": 2,
-			  "scaleDistribution": {
-				"type": "linear"
-			  },
-			  "showPoints": "always",
-			  "spanNulls": false,
-			  "stacking": {
-				"group": "A",
-				"mode": "none"
-			  },
-			  "thresholdsStyle": {
-				"mode": "dashed"
-			  }
+			  "fillOpacity": 100,
+			  "lineWidth": 2,
+			  "spanNulls": false
 			},
-			"decimals": 2,
 			"mappings": [],
 			"thresholds": {
-			  "mode": "percentage",
+			  "mode": "absolute",
 			  "steps": [
 				{
-				  "color": "transparent",
+				  "color": "green",
 				  "value": null
 				}
 			  ]
 			},
-			"unit": "percent"
+			"unit": "none"
 		  },
 		  "overrides": []
 		},
 		"gridPos": {
-		  "h": 9,
+		  "h": 13,
 		  "w": 12,
 		  "x": 12,
 		  "y": 0
 		},
-		"id": 2,
-		"links": [],
+		"id": 19,
 		"options": {
+		  "alignValue": "left",
 		  "legend": {
-			"calcs": [
-			  "min",
-			  "max",
-			  "mean",
-			  "last"
-			],
-			"displayMode": "table",
-			"placement": "right",
-			"showLegend": true
+			"displayMode": "list",
+			"placement": "bottom",
+			"showLegend": false
 		  },
+		  "mergeValues": false,
+		  "rowHeight": 0.9,
+		  "showValue": "never",
 		  "tooltip": {
-			"mode": "multi",
-			"sort": "desc"
+			"mode": "single",
+			"sort": "none"
 		  }
 		},
 		"pluginVersion": "9.3.2",
 		"targets": [
 		  {
-			"alias": "$tag_container_name",
+			"alias": "$tag_container_name $tag_container_status",
 			"datasource": {
 			  "type": "influxdb"
 			},
@@ -484,21 +455,23 @@
 			  },
 			  {
 				"params": [
-				  "none"
+				  "container_status"
 				],
-				"type": "fill"
+				"type": "tag"
 			  }
 			],
-			"measurement": "docker_container_cpu",
+			"measurement": "docker_container_status",
 			"orderByTime": "ASC",
 			"policy": "default",
+			"query": "SELECT last(\"container_id\") FROM \"docker_container_status\" WHERE (\"host\" =~ /^$Host$/ AND \"container_name\" =~ /^$ContainerName$/ AND \"container_status\" =~ /^$ContainerStatus$/) AND $timeFilter GROUP BY time($__interval), \"container_status\", \"container_name\"",
+			"rawQuery": false,
 			"refId": "A",
 			"resultFormat": "time_series",
 			"select": [
 			  [
 				{
 				  "params": [
-					"usage_percent"
+					"container_id"
 				  ],
 				  "type": "field"
 				},
@@ -510,22 +483,28 @@
 			],
 			"tags": [
 			  {
-				"key": "docker.group",
-				"operator": "=~",
-				"value": "/^$Docker_Stack$/"
-			  },
-			  {
-				"condition": "AND",
 				"key": "host",
 				"operator": "=~",
 				"value": "/^$Host$/"
+			  },
+			  {
+				"condition": "AND",
+				"key": "container_name",
+				"operator": "=~",
+				"value": "/^$ContainerName$/"
+			  },
+			  {
+				"condition": "AND",
+				"key": "container_status",
+				"operator": "=~",
+				"value": "/^$ContainerStatus$/"
 			  }
 			]
 		  }
 		],
-		"title": "CPU Usage %",
+		"title": "Containers Status",
 		"transparent": true,
-		"type": "timeseries"
+		"type": "state-timeline"
 	  },
 	  {
 		"datasource": {
@@ -575,10 +554,10 @@
 		  "overrides": []
 		},
 		"gridPos": {
-		  "h": 5,
+		  "h": 6,
 		  "w": 3,
 		  "x": 6,
-		  "y": 5
+		  "y": 6
 		},
 		"id": 17,
 		"links": [],
@@ -689,10 +668,10 @@
 		  "overrides": []
 		},
 		"gridPos": {
-		  "h": 5,
+		  "h": 6,
 		  "w": 3,
 		  "x": 9,
-		  "y": 5
+		  "y": 6
 		},
 		"id": 8,
 		"links": [],
@@ -779,8 +758,8 @@
 			  "axisPlacement": "auto",
 			  "barAlignment": 0,
 			  "drawStyle": "line",
-			  "fillOpacity": 50,
-			  "gradientMode": "opacity",
+			  "fillOpacity": 30,
+			  "gradientMode": "none",
 			  "hideFrom": {
 				"legend": false,
 				"tooltip": false,
@@ -788,65 +767,50 @@
 			  },
 			  "lineInterpolation": "smooth",
 			  "lineWidth": 1,
-			  "pointSize": 5,
+			  "pointSize": 2,
 			  "scaleDistribution": {
 				"type": "linear"
 			  },
-			  "showPoints": "never",
-			  "spanNulls": true,
+			  "showPoints": "always",
+			  "spanNulls": false,
 			  "stacking": {
 				"group": "A",
 				"mode": "none"
 			  },
 			  "thresholdsStyle": {
-				"mode": "off"
+				"mode": "dashed"
 			  }
 			},
-			"decimals": 0,
+			"decimals": 2,
 			"mappings": [],
 			"thresholds": {
-			  "mode": "absolute",
+			  "mode": "percentage",
 			  "steps": [
 				{
-				  "color": "green",
+				  "color": "transparent",
 				  "value": null
-				},
-				{
-				  "color": "red",
-				  "value": 80
 				}
 			  ]
 			},
-			"unit": "decbytes"
+			"unit": "percent"
 		  },
-		  "overrides": [
-			{
-			  "matcher": {
-				"id": "byRegexp",
-				"options": "/.*read*./"
-			  },
-			  "properties": [
-				{
-				  "id": "custom.transform",
-				  "value": "negative-Y"
-				}
-			  ]
-			}
-		  ]
+		  "overrides": []
 		},
 		"gridPos": {
-		  "h": 12,
-		  "w": 12,
-		  "x": 12,
-		  "y": 9
+		  "h": 15,
+		  "w": 24,
+		  "x": 0,
+		  "y": 13
 		},
-		"id": 4,
+		"id": 2,
 		"links": [],
 		"options": {
 		  "legend": {
 			"calcs": [
+			  "min",
+			  "max",
 			  "mean",
-			  "sum"
+			  "last"
 			],
 			"displayMode": "table",
 			"placement": "right",
@@ -860,7 +824,7 @@
 		"pluginVersion": "9.3.2",
 		"targets": [
 		  {
-			"alias": "$tag_container_name IO_write",
+			"alias": "$tag_container_name",
 			"datasource": {
 			  "type": "influxdb"
 			},
@@ -879,12 +843,12 @@
 			  },
 			  {
 				"params": [
-				  "null"
+				  "none"
 				],
 				"type": "fill"
 			  }
 			],
-			"measurement": "docker_container_blkio",
+			"measurement": "docker_container_cpu",
 			"orderByTime": "ASC",
 			"policy": "default",
 			"refId": "A",
@@ -893,90 +857,33 @@
 			  [
 				{
 				  "params": [
-					"io_service_bytes_recursive_write"
+					"usage_percent"
 				  ],
 				  "type": "field"
 				},
 				{
 				  "params": [],
-				  "type": "mean"
+				  "type": "last"
 				}
 			  ]
 			],
 			"tags": [
 			  {
-				"key": "docker.group",
-				"operator": "=~",
-				"value": "/^$Docker_Stack$/"
-			  },
-			  {
 				"condition": "AND",
 				"key": "host",
 				"operator": "=~",
 				"value": "/^$Host$/"
-			  }
-			]
-		  },
-		  {
-			"alias": "$tag_container_name IO_read",
-			"datasource": {
-			  "type": "influxdb"
-			},
-			"groupBy": [
-			  {
-				"params": [
-				  "$__interval"
-				],
-				"type": "time"
-			  },
-			  {
-				"params": [
-				  "container_name"
-				],
-				"type": "tag"
-			  },
-			  {
-				"params": [
-				  "null"
-				],
-				"type": "fill"
-			  }
-			],
-			"measurement": "docker_container_blkio",
-			"orderByTime": "ASC",
-			"policy": "default",
-			"refId": "B",
-			"resultFormat": "time_series",
-			"select": [
-			  [
-				{
-				  "params": [
-					"io_service_bytes_recursive_read"
-				  ],
-				  "type": "field"
-				},
-				{
-				  "params": [],
-				  "type": "mean"
-				}
-			  ]
-			],
-			"tags": [
-			  {
-				"key": "docker.group",
-				"operator": "=~",
-				"value": "/^$Docker_Stack$/"
 			  },
 			  {
 				"condition": "AND",
-				"key": "host",
+				"key": "container_name",
 				"operator": "=~",
-				"value": "/^$Host$/"
+				"value": "/^$ContainerName$/"
 			  }
 			]
 		  }
 		],
-		"title": "Disk IO",
+		"title": "CPU Usage %",
 		"transparent": true,
 		"type": "timeseries"
 	  },
@@ -1048,10 +955,10 @@
 		  ]
 		},
 		"gridPos": {
-		  "h": 10,
+		  "h": 12,
 		  "w": 12,
 		  "x": 0,
-		  "y": 11
+		  "y": 28
 		},
 		"id": 5,
 		"links": [],
@@ -1118,15 +1025,16 @@
 			],
 			"tags": [
 			  {
-				"key": "docker.group",
-				"operator": "=~",
-				"value": "/^$Docker_Stack$/"
-			  },
-			  {
 				"condition": "AND",
 				"key": "host",
 				"operator": "=~",
 				"value": "/^$Host$/"
+			  },
+			  {
+				"condition": "AND",
+				"key": "container_name",
+				"operator": "=~",
+				"value": "/^$ContainerName$/"
 			  }
 			]
 		  },
@@ -1176,20 +1084,240 @@
 			],
 			"tags": [
 			  {
-				"key": "docker.group",
-				"operator": "=~",
-				"value": "/^$Docker_Stack$/"
-			  },
-			  {
 				"condition": "AND",
 				"key": "host",
 				"operator": "=~",
 				"value": "/^$Host$/"
+			  },
+			  {
+				"condition": "AND",
+				"key": "container_name",
+				"operator": "=~",
+				"value": "/^$ContainerName$/"
 			  }
 			]
 		  }
 		],
 		"title": "Traffic",
+		"transparent": true,
+		"type": "timeseries"
+	  },
+	  {
+		"datasource": {
+		  "type": "influxdb"
+		},
+		"fieldConfig": {
+		  "defaults": {
+			"color": {
+			  "mode": "palette-classic"
+			},
+			"custom": {
+			  "axisCenteredZero": false,
+			  "axisColorMode": "text",
+			  "axisLabel": "",
+			  "axisPlacement": "auto",
+			  "barAlignment": 0,
+			  "drawStyle": "line",
+			  "fillOpacity": 50,
+			  "gradientMode": "opacity",
+			  "hideFrom": {
+				"legend": false,
+				"tooltip": false,
+				"viz": false
+			  },
+			  "lineInterpolation": "smooth",
+			  "lineWidth": 1,
+			  "pointSize": 5,
+			  "scaleDistribution": {
+				"type": "linear"
+			  },
+			  "showPoints": "never",
+			  "spanNulls": true,
+			  "stacking": {
+				"group": "A",
+				"mode": "none"
+			  },
+			  "thresholdsStyle": {
+				"mode": "off"
+			  }
+			},
+			"decimals": 0,
+			"mappings": [],
+			"thresholds": {
+			  "mode": "absolute",
+			  "steps": [
+				{
+				  "color": "green",
+				  "value": null
+				},
+				{
+				  "color": "red",
+				  "value": 80
+				}
+			  ]
+			},
+			"unit": "decbytes"
+		  },
+		  "overrides": [
+			{
+			  "matcher": {
+				"id": "byRegexp",
+				"options": "/.*read*./"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.transform",
+				  "value": "negative-Y"
+				}
+			  ]
+			}
+		  ]
+		},
+		"gridPos": {
+		  "h": 12,
+		  "w": 12,
+		  "x": 12,
+		  "y": 28
+		},
+		"id": 4,
+		"links": [],
+		"options": {
+		  "legend": {
+			"calcs": [
+			  "mean",
+			  "sum"
+			],
+			"displayMode": "table",
+			"placement": "right",
+			"showLegend": true
+		  },
+		  "tooltip": {
+			"mode": "multi",
+			"sort": "desc"
+		  }
+		},
+		"pluginVersion": "9.3.2",
+		"targets": [
+		  {
+			"alias": "$tag_container_name IO_write",
+			"datasource": {
+			  "type": "influxdb"
+			},
+			"groupBy": [
+			  {
+				"params": [
+				  "$__interval"
+				],
+				"type": "time"
+			  },
+			  {
+				"params": [
+				  "container_name"
+				],
+				"type": "tag"
+			  },
+			  {
+				"params": [
+				  "null"
+				],
+				"type": "fill"
+			  }
+			],
+			"measurement": "docker_container_blkio",
+			"orderByTime": "ASC",
+			"policy": "default",
+			"refId": "A",
+			"resultFormat": "time_series",
+			"select": [
+			  [
+				{
+				  "params": [
+					"io_service_bytes_recursive_write"
+				  ],
+				  "type": "field"
+				},
+				{
+				  "params": [],
+				  "type": "mean"
+				}
+			  ]
+			],
+			"tags": [
+			  {
+				"condition": "AND",
+				"key": "host",
+				"operator": "=~",
+				"value": "/^$Host$/"
+			  },
+			  {
+				"condition": "AND",
+				"key": "container_name",
+				"operator": "=~",
+				"value": "/^$ContainerName$/"
+			  }
+			]
+		  },
+		  {
+			"alias": "$tag_container_name IO_read",
+			"datasource": {
+			  "type": "influxdb"
+			},
+			"groupBy": [
+			  {
+				"params": [
+				  "$__interval"
+				],
+				"type": "time"
+			  },
+			  {
+				"params": [
+				  "container_name"
+				],
+				"type": "tag"
+			  },
+			  {
+				"params": [
+				  "null"
+				],
+				"type": "fill"
+			  }
+			],
+			"measurement": "docker_container_blkio",
+			"orderByTime": "ASC",
+			"policy": "default",
+			"refId": "B",
+			"resultFormat": "time_series",
+			"select": [
+			  [
+				{
+				  "params": [
+					"io_service_bytes_recursive_read"
+				  ],
+				  "type": "field"
+				},
+				{
+				  "params": [],
+				  "type": "mean"
+				}
+			  ]
+			],
+			"tags": [
+			  {
+				"condition": "AND",
+				"key": "host",
+				"operator": "=~",
+				"value": "/^$Host$/"
+			  },
+			  {
+				"condition": "AND",
+				"key": "container_name",
+				"operator": "=~",
+				"value": "/^$ContainerName$/"
+			  }
+			]
+		  }
+		],
+		"title": "Disk IO",
 		"transparent": true,
 		"type": "timeseries"
 	  },
@@ -1251,10 +1379,10 @@
 		  "overrides": []
 		},
 		"gridPos": {
-		  "h": 11,
+		  "h": 13,
 		  "w": 24,
 		  "x": 0,
-		  "y": 21
+		  "y": 40
 		},
 		"id": 3,
 		"links": [],
@@ -1321,15 +1449,16 @@
 			],
 			"tags": [
 			  {
-				"key": "docker.group",
-				"operator": "=~",
-				"value": "/^$Docker_Stack$/"
-			  },
-			  {
 				"condition": "AND",
 				"key": "host",
 				"operator": "=~",
 				"value": "/^$Host$/"
+			  },
+			  {
+				"condition": "AND",
+				"key": "container_name",
+				"operator": "=~",
+				"value": "/^$ContainerName$/"
 			  }
 			]
 		  }
@@ -1344,8 +1473,8 @@
 	"style": "dark",
 	"tags": [
 	  "Docker",
-	  "Telegraf",
-	  "InfluxDB"
+	  "InfluxDB",
+	  "Telegraf"
 	],
 	"templating": {
 	  "list": [
@@ -1376,29 +1505,61 @@
 		},
 		{
 		  "current": {
-			"selected": false,
-			"text": "All",
-			"value": "$__all"
+			"selected": true,
+			"text": [
+			  "All"
+			],
+			"value": [
+			  "$__all"
+			]
 		  },
 		  "datasource": {
 			"type": "influxdb"
 		  },
-		  "definition": "",
+		  "definition": "SHOW TAG VALUES WITH KEY = \"container_name\"",
 		  "hide": 0,
 		  "includeAll": true,
-		  "label": "Docker_Stack",
+		  "label": "ContainerName",
 		  "multi": true,
-		  "name": "Docker_Stack",
+		  "name": "ContainerName",
 		  "options": [],
-		  "query": "SHOW TAG VALUES WITH KEY = \"docker.group\"  ",
+		  "query": "SHOW TAG VALUES WITH KEY = \"container_name\"",
 		  "refresh": 1,
 		  "regex": "",
 		  "skipUrlSync": false,
-		  "sort": 0,
+		  "sort": 1,
 		  "tagValuesQuery": "",
 		  "tagsQuery": "",
-		  "type": "query",
-		  "useTags": false
+		  "type": "query"
+		},
+		{
+		  "current": {
+			"selected": true,
+			"text": [
+			  "All"
+			],
+			"value": [
+			  "$__all"
+			]
+		  },
+		  "datasource": {
+			"type": "influxdb"
+		  },
+		  "definition": "SHOW TAG VALUES WITH KEY = \"container_status\"",
+		  "hide": 0,
+		  "includeAll": true,
+		  "label": "ContainerStatus",
+		  "multi": true,
+		  "name": "ContainerStatus",
+		  "options": [],
+		  "query": "SHOW TAG VALUES WITH KEY = \"container_status\"",
+		  "refresh": 1,
+		  "regex": "",
+		  "skipUrlSync": false,
+		  "sort": 1,
+		  "tagValuesQuery": "",
+		  "tagsQuery": "",
+		  "type": "query"
 		}
 	  ]
 	},
@@ -1407,9 +1568,11 @@
 	  "to": "now"
 	},
 	"timepicker": {
+	  "hidden": false,
 	  "refresh_intervals": [
 		"5s",
 		"10s",
+		"20s",
 		"30s",
 		"1m",
 		"5m",
@@ -1432,7 +1595,7 @@
 	  ]
 	},
 	"timezone": "",
-	"title": "Docker Monitoring & Stats",
-	"version": 1,
+	"title": "Docker Monitoring",
+	"version": 18,
 	"weekStart": ""
   }

@@ -6,13 +6,13 @@
 #    By: sel-mars <sel-mars@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/15 18:33:51 by sel-mars          #+#    #+#              #
-#    Updated: 2023/01/10 16:22:35 by sel-mars         ###   ########.fr        #
+#    Updated: 2023/01/10 18:22:37 by sel-mars         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 #! /bin/bash
 if [ ! -e /var/www/html/wp-config.php ]; then
-	echo -e "\n\e[3m\e[1;37m# ------------------------- Configuring Wordpress 1/2 ------------------------ #\e[0m\n"
+	echo -e "\n\e[3m\e[1;37m# ------------------------- Configuring Wordpress 1/3 ------------------------ #\e[0m\n"
 	groupadd www-pub
 	usermod -aG www-pub www-data
 	runuser -u www-data -- wp core download --path="/var/www/html"
@@ -26,10 +26,13 @@ if [ ! -e /var/www/html/wp-config.php ]; then
 	chown -R www-data:www-pub /var/www
 	chmod 2775 /var/www
 fi
-echo -e "\n\e[3m\e[1;37m# ------------------------- Configuring Wordpress 2/2 ------------------------ #\e[0m\n"
+echo -e "\n\e[3m\e[1;37m# ------------------------- Configuring Wordpress 2/3 ------------------------ #\e[0m\n"
 sed -i -e "s/listen =.*/listen = 9000/" /etc/php/$(wp --info | grep php.ini | cut -d'/' -f4 )/fpm/pool.d/www.conf
-service php$(wp --info | grep php.ini | cut -d'/' -f4 )-fpm start
-service php$(wp --info | grep php.ini | cut -d'/' -f4 )-fpm stop
+if [ ! -d /run/php ]; then
+	echo -e "\n\e[3m\e[1;37m# ------------------------- Configuring Wordpress 3/3 ------------------------ #\e[0m\n"
+	service php$(wp --info | grep php.ini | cut -d'/' -f4 )-fpm start
+	service php$(wp --info | grep php.ini | cut -d'/' -f4 )-fpm stop
+fi
 echo -e "\n\e[3m\e[1;37m# ---------------------------------------------------------------------------- #\e[0m\n
 \e[3m\e[1;37m                              Starting WordPress                              \e[0m
 \n\e[3m\e[1;37m# ---------------------------------------------------------------------------- #\e[0m\n"
