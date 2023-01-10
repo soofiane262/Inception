@@ -128,7 +128,7 @@ services:
     networks:
       - inception
     volumes:
-      - web:/home/sel-mars
+      - web:/home/www-data
     env_file:
       - .env
 
