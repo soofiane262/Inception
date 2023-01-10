@@ -131,8 +131,6 @@ services:
       - web:/home/sel-mars
     env_file:
       - .env
-    depends_on:
-      - wordpress
 
 networks:
   inception:
