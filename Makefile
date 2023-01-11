@@ -6,19 +6,17 @@
 #    By: sel-mars <sel-mars@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/15 18:48:40 by sel-mars          #+#    #+#              #
-#    Updated: 2023/01/10 18:18:39 by sel-mars         ###   ########.fr        #
+#    Updated: 2023/01/11 10:49:22 by sel-mars         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			=	inception
 
-CMPS_CMD		=	docker-compose
-# CMPS_CMD		=	docker compose
+CMPS_CMD		=	docker compose
 
 CMPS_FILE		=	srcs/docker-compose.yml
 
-VOLUMES_ROOT	=	/Users/sel-mars/Desktop/Inception/data
-# VOLUMES_ROOT	=	/home/sel-mars/data
+VOLUMES_ROOT	=	/home/sel-mars/data
 
 VOLUMES			=	$(VOLUMES_ROOT)/web $(VOLUMES_ROOT)/mariadb $(VOLUMES_ROOT)/influxdb
 
