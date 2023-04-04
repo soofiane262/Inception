@@ -138,6 +138,12 @@ This command will remove the volumes, rebuild the containers, and start the cont
 -   [Nginx documentation](https://nginx.org/en/docs/)
 -   [OpenSSL documentation](https://www.openssl.org/docs/)
 -   [Bash documentation](https://www.gnu.org/software/bash/manual/html_node/index.html)
+-   [WordPress CLI Documentation](https://wp-cli.org/)
+-   [MariaDB documentation](https://mariadb.com/kb/en/documentation/)
+-   [Adminer documentation](https://www.adminer.org/en/)
+-   [Telegraf documentation](https://docs.influxdata.com/telegraf/v1.18/)
+-   [InfluxDB documentation](https://docs.influxdata.com/influxdb/v1.8/)
+-   [Grafana documentation](https://grafana.com/docs/grafana/latest/setup-grafana/installation/debian/)
 
 ## #_Authors_
 
