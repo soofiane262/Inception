@@ -1,12 +1,20 @@
 server {
+	# Listen for incoming requests on port 80 with HTTP protocol
     listen 80;
-	server_name domain-name;
 
-	ssl_protocols	TLSv1.3;
+	# Will be replaced by the actual domain-nmae contained in env at runtime
+    server_name domain-name;
 
+    # Specify the SSL/TLS protocol to use (TLSv1.3)
+    ssl_protocols       TLSv1.3;
+
+    # Set the root directory for serving static files
 	root /var/www/html;
+
+    # Define the order in which index files are used to serve a directory
 	index index.html index.htm index.nginx-debian.html;
 
+    # Serve static files from the root directory
 	location / {
 		try_files $uri $uri/ =404;
 	}

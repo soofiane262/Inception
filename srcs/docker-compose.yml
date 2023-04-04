@@ -1,155 +1,327 @@
 version: "3.6"
 
 services:
+
+  # Define a container for InfluxDB
   influxdb:
+    # Build the image from the Dockerfile in ./requirements/bonus/influxdb
     build: ./requirements/bonus/influxdb
+    # Specify the name of the image
     image: influxdb
+    # Specify the name of the container
     container_name: influxdb
+    # Restart the container automatically on failure
     restart: on-failure
+    # Expose port 8086 to the host
     ports:
       - "8086:8086"
+    # Connect the container to the inception network
     networks:
       - inception
+    # Mount the influxdb volume to persist data
     volumes:
       - influxdb:/var/lib/influxdb
+    # Load environment variables from .env file
     env_file:
       - .env
+    # Define a health check to ensure the container is healthy
+    healthcheck:
+      test: ["CMD-SHELL", "influx ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  # Define a container for Telegraf, a plugin-driven server agent for collecting and reporting metrics
   telegraf:
+    # Build the image from the Dockerfile in ./requirements/bonus/telegraf
     build: ./requirements/bonus/telegraf
+    # Specify the name of the image
     image: telegraf
+    # Specify the name of the container
     container_name: telegraf
+    # Restart the container automatically on failure
     restart: on-failure
+    # Connect the container to the inception network
     networks:
       - inception
+    # Mount the Docker socket to access metrics for all running containers and the host
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
+    # Load environment variables from .env file
     env_file:
       - .env
+    # Specify that this container depends on influxdb
     depends_on:
       - influxdb
+    # Define a health check to ensure the container is healthy
+    healthcheck:
+      test: ["CMD-SHELL", "telegraf -test"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Define a container for Grafana, a web-based platform for data visualization and analytics
   grafana:
+    # Build the image from the Dockerfile in ./requirements/bonus/grafana
     build: ./requirements/bonus/grafana
+    # Specify the name of the image
     image: grafana
+    # Specify the name of the container
     container_name: grafana
+    # Restart the container automatically on failure
     restart: on-failure
+    # Expose the Grafana web interface on port 3000
     ports:
       - "3000:3000"
+    # Connect the container to the inception network
     networks:
       - inception
+    # Load environment variables from .env file
     env_file:
       - .env
+    # Specify that this container depends on influxdb and telegraf
     depends_on:
       - influxdb
       - telegraf
+    # Define a health check to ensure the container is healthy
+    healthcheck:
+      test: ["CMD", "curl", "--silent", "--fail", "http://localhost:3000/login"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Define a container for the website
   website:
+    # Build the image from the Dockerfile in ./requirements/bonus/website
     build: ./requirements/bonus/website
+    # Specify the name of the image
     image: website
+    # Specify the name of the container
     container_name: website
+    # Restart the container automatically on failure
     restart: on-failure
+    # Expose the website on port 40006
     ports:
       - "40006:80"
+    # Connect the container to the inception network
     networks:
       - inception
+    # Load environment variables from .env file
     env_file:
       - .env
+    # Define a health check to ensure the container is healthy
+    healthcheck:
+      test: ["CMD", "curl", "--silent", "--fail", "http://localhost:40006"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Define a container for Nginx, a web server and reverse proxy
   nginx:
+    # Build the image from the Dockerfile in ./requirements/nginx
     build: ./requirements/nginx
+    # Specify the name of the image
     image: nginx
+    # Specify the name of the container
     container_name: nginx
+    # Restart the container automatically on failure
     restart: on-failure
+    # Expose the Nginx web interface on port 443
     ports:
       - "443:443"
+    # Connect the container to the inception network
     networks:
       - inception
+    # Mount the web volume to /var/www/html
     volumes:
       - web:/var/www/html
+    # Load environment variables from .env file
     env_file:
       - .env
+    # Define a health check to ensure the container is healthy
+    healthcheck:
+      test: ["CMD", "curl", "--silent", "--fail", "https://localhost"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Define a container for MariaDB, an open-source relational database management system
   mariadb:
+    # Build the image from the Dockerfile in ./requirements/mariadb
     build: ./requirements/mariadb
+    # Specify the name of the image
     image: mariadb
+    # Specify the name of the container
     container_name: mariadb
+    # Restart the container automatically on failure
     restart: on-failure
+    # Expose the MariaDB server on port 3306
     ports:
       - "3306:3306"
+    # Connect the container to the inception network
     networks:
       - inception
+    # Mount the mariadb volume to /var/lib/mysql in the container
     volumes:
       - mariadb:/var/lib/mysql
+    # Load environment variables from .env file
     env_file:
       - .env
+    # Define a health check to ensure the container is healthy
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Define a container for Adminer, a web-based database management tool
   adminer:
+    # Build the image from the Dockerfile in ./requirements/bonus/adminer
     build: ./requirements/bonus/adminer
+    # Specify the name of the image
     image: adminer
+    # Specify the name of the container
     container_name: adminer
+    # Restart the container automatically on failure
     restart: on-failure
+    # Expose the Adminer web interface on port 8081
     ports:
       - "8081:80"
+    # Connect the container to the inception network
     networks:
       - inception
+    # Load environment variables from .env file
     env_file:
       - .env
+    # Define a health check to ensure the container is healthy
+    healthcheck:
+      test: ["CMD", "curl", "--silent", "--fail", "https://localhost:8081"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Define a container for Redis, an in-memory data structure store
   redis:
+    # Build the image from the Dockerfile in ./requirements/bonus/redis
     build: ./requirements/bonus/redis
+    # Specify the name of the image
     image: redis
+    # Specify the name of the container
     container_name: redis
+    # Restart the container automatically on failure
     restart: on-failure
+    # Expose the Redis port on port 6379
     ports:
       - "6379:6379"
+    # Connect the container to the inception network
     networks:
       - inception
+    # Load environment variables from .env file
     env_file:
       - .env
+    # Define a health check to ensure the container is healthy
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Define a container for WordPress, a popular content management system
   wordpress:
+    # Build the image from the Dockerfile in ./requirements/wordpress
     build: ./requirements/wordpress
+    # Specify the name of the image
     image: wordpress
+    # Specify the name of the container
     container_name: wordpress
+    # Restart the container automatically on failure
     restart: on-failure
+    # Expose WordPress on port 9000
     ports:
       - "9000:9000"
+    # Connect the container to the inception network
     networks:
       - inception
+    # Mount the web volume to /var/www/html in the container
     volumes:
       - web:/var/www/html
+    # Load environment variables from .env file
     env_file:
       - .env
+    # Specify that this container depends on nginx, mariadb, and redis
     depends_on:
       - nginx
       - mariadb
       - redis
+    # Define a health check to ensure the container is healthy
+    healthcheck:
+      test: ["CMD", "curl", "--silent", "--fail", "http://localhost:9000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Define a container for an FTP server
   ftp:
+    # Build the image from the Dockerfile in ./requirements/bonus/ftp
     build: ./requirements/bonus/ftp
+    # Use the latest version of the FTP server image
     image: ftp
+    # Specify the name of the container
     container_name: ftp
+    # Restart the container automatically on failure
     restart: on-failure
+    # Expose ports 20-21 and 40000-40005 for FTP connections
     ports:
       - "20-21:20-21"
       - "40000-40005:40000-40005"
+    # Connect the container to the inception network
     networks:
       - inception
+    # Mount the web volume to /home/sel-mars in the container
     volumes:
       - web:/home/sel-mars
+    # Load environment variables from .env file
     env_file:
       - .env
+    # Define a health check to ensure the container is healthy
+    healthcheck:
+      test: ["CMD", "ftp", "-nv", "localhost", "21"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
+# Define a custom Docker network for the project
 networks:
+  # Name the network "inception"
   inception:
+    # Use the "bridge" driver, which allows containers to communicate with each other using the same network
     driver: bridge
+    # Name the network "inception" (this is redundant, but helps make the configuration more readable)
     name: inception
 
+# Define custom Docker volumes for the project
 volumes:
+  # Create a Docker volume named "web"
   web:
+    # Use the "none" driver with bind mount type
     driver_opts:
       type: "none"
       o: bind
-      device: "/home/sel-mars/data/web"
+      # Mount the local directory "/Users/sel-mars/data/web" to the Docker volume "web"
+      device: "/Users/sel-mars/data/web"
+  # Create a Docker volume named "mariadb"
   mariadb:
+    # Use the "none" driver with bind mount type
     driver_opts:
       type: "none"
       o: bind
-      device: "/home/sel-mars/data/mariadb"
+      # Mount the local directory "/Users/sel-mars/data/mariadb" to the Docker volume "mariadb"
+      device: "/Users/sel-mars/data/mariadb"
+  # Create a Docker volume named "influxdb"
   influxdb:
+    # Use the "none" driver with bind mount type
     driver_opts:
       type: "none"
       o: bind
-      device: "/home/sel-mars/data/influxdb"
+      # Mount the local directory "/Users/sel-mars/data/influxdb" to the Docker volume "influxdb"
+      device: "/Users/sel-mars/data/influxdb"

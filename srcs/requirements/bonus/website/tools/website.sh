@@ -1,18 +1,15 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    website.sh                                         :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: sel-mars <sel-mars@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/01/02 16:09:33 by sel-mars          #+#    #+#              #
-#    Updated: 2023/01/09 20:47:57 by sel-mars         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 #! /bin/bash
-sed -i "s/server_name domain-name/server_name $DOMAIN_NAME/" /etc/nginx/sites-available/default
-echo -e "\n\e[3m\e[1;37m# ---------------------------------------------------------------------------- #\e[0m\n
-\e[3m\e[1;37m                               Starting Website                               \e[0m
-\n\e[3m\e[1;37m# ---------------------------------------------------------------------------- #\e[0m\n"
-nginx -g 'daemon off;'
+
+# Set the color variables for the terminal
+BOLD_GREEN='\033[1;32m'
+NO_COLOR='\033[0m'
+
+# Replace the `server_name` directive in the NGINX configuration file
+# with the value of the $DOMAIN_NAME environment variable.
+sed -i "s/server_name domain-name/server_name \"$DOMAIN_NAME\"/" /etc/nginx/sites-available/default
+
+# Print a success message to the terminal
+echo -e "${BOLD_GREEN}Successfully replaced the server_name directive in the NGINX configuration file.${NO_COLOR}"
+
+# Exit with a success code
+exit 0

@@ -1,22 +1,40 @@
 server {
-	listen 443 ssl http2;
-	server_name domain-name;
+	
+	# Listen for incoming requests on port 443 using SSL/TLS with HTTP/2 protocol
+    listen 443 ssl http2;
 
-	ssl_certificate		/etc/ssl/nginx-ss-cert.crt;
-	ssl_certificate_key	/etc/ssl/nginx-ss-cert.key;
+    # Will be replaced by the actual domain-nmae contained in env at runtime
+    server_name domain-name;
 
-	ssl_protocols	TLSv1.3;
+    # Specify the SSL/TLS certificate and key to use for secure connections
+    ssl_certificate     /etc/ssl/nginx-ss-cert.crt;
+    ssl_certificate_key /etc/ssl/nginx-ss-cert.key;
 
-	root /var/www/html;
-	index index.php index.html index.htm index.nginx-debian.html;
+    # Specify the SSL/TLS protocol to use (TLSv1.3)
+    ssl_protocols       TLSv1.3;
 
-	location / {
-		try_files $uri $uri/ =404;
-	}
-	location ~ .php$ {
-		try_files $uri =404;
-		include /etc/nginx/fastcgi_params;
-		fastcgi_pass wordpress:9000;
-		fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-	}
+    # Set the root directory for serving static files
+    root /var/www/html;
+
+    # Define the order in which index files are used to serve a directory
+    index index.php index.html index.htm index.nginx-debian.html;
+
+    # Serve static files from the root directory
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    # Handle PHP files using FastCGI and pass them to a WordPress container running on port 9000
+    location ~ .php$ {
+        try_files $uri =404;
+
+        # Include the default FastCGI parameters for PHP scripts
+        include /etc/nginx/fastcgi_params;
+
+        # Pass the request to the WordPress container
+        fastcgi_pass wordpress:9000;
+
+        # Set the SCRIPT_FILENAME parameter to the document root plus the script name
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    }
 }
