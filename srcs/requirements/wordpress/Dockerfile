@@ -6,12 +6,15 @@
 #    By: sel-mars <sel-mars@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/15 18:34:32 by sel-mars          #+#    #+#              #
-#    Updated: 2023/04/04 21:30:35 by sel-mars         ###   ########.fr        #
+#    Updated: 2023/04/05 12:24:44 by sel-mars         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Use the Debian Bullseye base image
 FROM debian:bullseye
+
+# Copy the tools directory to the container's /tmp directory
+COPY ./tools/ /tmp/
 
 # Update package list, upgrade installed packages, and install required packages
 RUN apt-get update -y \
@@ -26,12 +29,9 @@ RUN apt-get update -y \
 	# Grant execute permission to the wp.sh script
 	&& chmod +x /tmp/wp.sh
 
-# Copy the tools directory to the container's /tmp directory
-COPY ./tools/ /tmp/
-
 # Expose port 9000 for PHP-FPM
 EXPOSE 9000
 
 # Set the entrypoint for the container to bash, and set the command to run wp.sh followed by php-fpm
 ENTRYPOINT [ "/bin/bash", "-c" ]
-CMD [ "/tmp/wp.sh && php-fpm7.4 -F" ]
+CMD [ "/tmp/wp.sh; php-fpm7.4 -F" ]

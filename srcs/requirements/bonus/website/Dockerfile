@@ -6,7 +6,7 @@
 #    By: sel-mars <sel-mars@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/15 18:34:20 by sel-mars          #+#    #+#              #
-#    Updated: 2023/04/04 22:37:47 by sel-mars         ###   ########.fr        #
+#    Updated: 2023/04/05 12:24:33 by sel-mars         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,4 +32,4 @@ EXPOSE 80
 
 # Set the entry point to Bash and the default command to start Nginx and the website.sh script
 ENTRYPOINT [ "/bin/bash", "-c" ]
-CMD [ "/tmp/website.sh && /usr/sbin/nginx -g 'daemon off;'" ]
+CMD [ "/tmp/website.sh; /usr/sbin/nginx -g 'daemon off;'" ]

@@ -21,8 +21,11 @@ if [ ! -e /etc/vsftpd.userlist ]; then
 # Additional Configs
 allow_writeable_chroot=YES
 pasv_enable=YES
-pasv_min_port=40000\npasv_max_port=40005
-userlist_enable=YES\nuserlist_file=/etc/vsftpd.userlist\nuserlist_deny=NO
+pasv_min_port=40000
+pasv_max_port=40005
+userlist_enable=YES
+userlist_file=/etc/vsftpd.userlist
+userlist_deny=NO
 EOF
 
 	# Create a new user and group

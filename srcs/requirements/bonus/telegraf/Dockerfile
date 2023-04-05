@@ -6,7 +6,7 @@
 #    By: sel-mars <sel-mars@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/15 18:34:20 by sel-mars          #+#    #+#              #
-#    Updated: 2023/04/04 21:37:19 by sel-mars         ###   ########.fr        #
+#    Updated: 2023/04/05 13:13:20 by sel-mars         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,4 +26,4 @@ RUN apt-get update -y \
 
 # Set the default entrypoint to bash to run the Telegraf script and start Telegraf
 ENTRYPOINT [ "/bin/bash" , "-c" ]
-CMD [ "/tmp/telegraf.sh && telegraf" ]
+CMD [ "/tmp/telegraf.sh; telegraf" ]

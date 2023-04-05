@@ -7,8 +7,8 @@ NO_COLOR='\033[0m'
 
 # Check if the Telegraf configuration file exists; if not, install Telegraf
 if [ ! -e /etc/telegraf/telegraf.conf ]; then
-	# Add InfluxDB GPG key
-	if ! curl -Lk https://repos.influxdata.com/influxdb.key | apt-key add -; then
+	# Import the public key for the InfluxDB repository
+	if ! apt-key adv --keyserver keyserver.ubuntu.com --recv-keys "$INFLUXDB_GPG_KEY"; then
 		echo -e "${BOLD_RED}Failed to add the InfluxDB GPG key.${NO_COLOR}" >&2
 		exit 1
 	fi
@@ -20,7 +20,7 @@ if [ ! -e /etc/telegraf/telegraf.conf ]; then
 	apt-get install -y telegraf # Install Telegraf package
 
 	# Copy the Telegraf configuration file to the appropriate directory
-	cp /tmp/telegraf.conf /etc/telegraf/
+	cp /tmp/telegraf.conf /etc/telegraf/telegraf.conf
 
 	# Replace the placeholders with the actual values
 	sed -i "s/domain-name/$DOMAIN_NAME/" /etc/telegraf/telegraf.conf

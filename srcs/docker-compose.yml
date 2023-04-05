@@ -26,7 +26,7 @@ services:
       - .env
     # Define a health check to ensure the container is healthy
     healthcheck:
-      test: ["CMD-SHELL", "influx ping"]
+      test: ["CMD-SHELL", "service influxdb status"]
       interval: 10s
       timeout: 5s
       retries: 3
@@ -55,7 +55,7 @@ services:
       - influxdb
     # Define a health check to ensure the container is healthy
     healthcheck:
-      test: ["CMD-SHELL", "telegraf -test"]
+      test: ["CMD-SHELL", "telegraf --test"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -85,7 +85,7 @@ services:
       - telegraf
     # Define a health check to ensure the container is healthy
     healthcheck:
-      test: ["CMD", "curl", "--silent", "--fail", "http://localhost:3000/login"]
+      test: ["CMD-SHELL", "curl --silent --fail http://localhost:3000/login"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -111,7 +111,7 @@ services:
       - .env
     # Define a health check to ensure the container is healthy
     healthcheck:
-      test: ["CMD", "curl", "--silent", "--fail", "http://localhost:40006"]
+      test: ["CMD-SHELL", "curl --silent --fail http://localhost"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -140,7 +140,7 @@ services:
       - .env
     # Define a health check to ensure the container is healthy
     healthcheck:
-      test: ["CMD", "curl", "--silent", "--fail", "https://localhost"]
+      test: ["CMD-SHELL", "curl -k --silent --fail https://localhost"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -169,7 +169,7 @@ services:
       - .env
     # Define a health check to ensure the container is healthy
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -195,7 +195,7 @@ services:
       - .env
     # Define a health check to ensure the container is healthy
     healthcheck:
-      test: ["CMD", "curl", "--silent", "--fail", "https://localhost:8081"]
+      test: ["CMD-SHELL", "curl --silent --fail http://localhost"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -221,7 +221,7 @@ services:
       - .env
     # Define a health check to ensure the container is healthy
     healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
+      test: ["CMD-SHELL", "redis-cli ping"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -255,7 +255,7 @@ services:
       - redis
     # Define a health check to ensure the container is healthy
     healthcheck:
-      test: ["CMD", "curl", "--silent", "--fail", "http://localhost:9000"]
+      test: ["CMD-SHELL", "service php7.4-fpm status"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -285,7 +285,7 @@ services:
       - .env
     # Define a health check to ensure the container is healthy
     healthcheck:
-      test: ["CMD", "ftp", "-nv", "localhost", "21"]
+      test: ["CMD-SHELL", "ftp -nv localhost 21"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -306,22 +306,22 @@ volumes:
     # Use the "none" driver with bind mount type
     driver_opts:
       type: "none"
-      o: bind
       # Mount the local directory "/Users/sel-mars/data/web" to the Docker volume "web"
-      device: "/Users/sel-mars/data/web"
+      device: "/Users/sel-mars/inception-volumes/web"
+      o: "bind"
   # Create a Docker volume named "mariadb"
   mariadb:
     # Use the "none" driver with bind mount type
     driver_opts:
       type: "none"
-      o: bind
       # Mount the local directory "/Users/sel-mars/data/mariadb" to the Docker volume "mariadb"
-      device: "/Users/sel-mars/data/mariadb"
+      device: "/Users/sel-mars/inception-volumes/mariadb"
+      o: "bind"
   # Create a Docker volume named "influxdb"
   influxdb:
     # Use the "none" driver with bind mount type
     driver_opts:
       type: "none"
-      o: bind
       # Mount the local directory "/Users/sel-mars/data/influxdb" to the Docker volume "influxdb"
-      device: "/Users/sel-mars/data/influxdb"
+      device: "/Users/sel-mars/inception-volumes/influxdb"
+      o: "bind"

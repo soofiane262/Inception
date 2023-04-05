@@ -6,7 +6,7 @@
 #    By: sel-mars <sel-mars@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/15 18:34:20 by sel-mars          #+#    #+#              #
-#    Updated: 2023/04/04 22:11:00 by sel-mars         ###   ########.fr        #
+#    Updated: 2023/04/05 12:24:18 by sel-mars         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,11 +25,13 @@ RUN apt-get update -y \
 	&& add-apt-repository "deb https://packages.grafana.com/oss/deb stable main" \
 	# Update the package manager again to get the Grafana package, and install it
 	&& apt-get update -y \
-	&& apt-get -y install grafana
+	&& apt-get -y install grafana \
+	# Grant execute permission to the grafana.sh script
+	&& chmod +x /tmp/grafana.sh
 
 # Expose the port 3000
 EXPOSE 3000
 
 # Set the entrypoint to Bash and command for the container to start Grafana and the grafana.sh script
 ENTRYPOINT [ "/bin/bash" , "-c" ]
-CMD [ "/tmp/grafana.sh && grafana-server -config $GF_PATHS_CONFIG -homepath $GF_PATHS_HOME" ]
+CMD [ "/tmp/grafana.sh; grafana-server -config $GF_PATHS_CONFIG -homepath $GF_PATHS_HOME" ]

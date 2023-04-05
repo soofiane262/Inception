@@ -7,9 +7,8 @@ NO_COLOR='\033[0m'
 
 # Check if InfluxDB is not already installed and configured
 if [ ! -e /etc/influxdb/influxdb.conf ]; then
-	# Add InfluxDB GPG key for package verification
-	if ! curl -Lk https://repos.influxdata.com/influxdb.key | apt-key add -; then
-		# Print error message if adding GPG key fails and exit with status code 1
+	# Import the public key for the InfluxDB repository
+	if ! apt-key adv --keyserver keyserver.ubuntu.com --recv-keys "$INFLUXDB_GPG_KEY"; then
 		echo -e "${BOLD_RED}Failed to add the InfluxDB GPG key.${NO_COLOR}" >&2
 		exit 1
 	fi
