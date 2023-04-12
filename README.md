@@ -1,4 +1,6 @@
-# Inception - System Administration with Docker
+# <center>Inception - System Administration with Docker</center>
+
+[![sel-mars's 42 Inception Score](https://badge42.vercel.app/api/v2/cl49y2gyb004909l3hwkwo9dg/project/2898085)](https://github.com/JaeSeoKim/badge42)
 
 ## Table of Contents
 
@@ -132,20 +134,20 @@ This command will remove the volumes, rebuild the containers, and start the cont
 
 ### _Resources_
 
--   [Docker documentation](https://docs.docker.com/)
--   [Dockerfile reference](https://docs.docker.com/engine/reference/builder/)
+-   [Docker](https://docs.docker.com/)
+-   [Dockerfile](https://docs.docker.com/engine/reference/builder/)
 -   [Dockerfile best practices](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/)
--   [Nginx documentation](https://nginx.org/en/docs/)
--   [OpenSSL documentation](https://www.openssl.org/docs/)
--   [Bash documentation](https://www.gnu.org/software/bash/manual/html_node/index.html)
--   [WordPress CLI Documentation](https://wp-cli.org/)
--   [MariaDB documentation](https://mariadb.com/kb/en/documentation/)
--   [Adminer documentation](https://www.adminer.org/en/)
--   [Telegraf documentation](https://docs.influxdata.com/telegraf/v1.18/)
--   [InfluxDB documentation](https://docs.influxdata.com/influxdb/v1.8/)
--   [Grafana documentation](https://grafana.com/docs/grafana/latest/setup-grafana/installation/debian/)
+-   [Nginx](https://nginx.org/en/docs/)
+-   [OpenSSL](https://www.openssl.org/docs/)
+-   [Bash](https://www.gnu.org/software/bash/manual/html_node/index.html)
+-   [WordPress CLI](https://wp-cli.org/)
+-   [MariaDB](https://mariadb.com/kb/en/documentation/)
+-   [Adminer](https://www.adminer.org/en/)
+-   [Telegraf](https://docs.influxdata.com/telegraf/v1.18/)
+-   [InfluxDB](https://docs.influxdata.com/influxdb/v1.8/)
+-   [Grafana](https://grafana.com/docs/grafana/latest/setup-grafana/installation/debian/)
 
-## #_Authors_
+## _Authors_
 
 The `Inception` project was created by [Soufiane El Marsi](https://www.github.com/soofiane262) as part of the common core's curriculum for the [1337 Coding School](https://www.1337.ma/en/)'s System Administration and Networking branches, a coding school located in Morocco, Africa, that is a member of the renowned [42 Network](https://www.42network.org/) of coding schools. The school is also powered by the [Mohammed VI Polytechnic University (UM6P)](https://um6p.ma/), which provides world-class resources and expertise to its students.
 
